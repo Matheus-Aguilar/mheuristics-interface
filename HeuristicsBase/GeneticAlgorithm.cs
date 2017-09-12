@@ -109,8 +109,6 @@ namespace Heuristics
             solucoes.Add(filho1);
             solucoes.Add(filho2);
 
-            //Task<double>[] tasks = new Task<double>[4];
-
             Task<double>[] tasks = solucoes.Select(p => new Task<double>(() => avaliar(p).Item1)).ToArray();
 
             foreach (Task task in tasks)

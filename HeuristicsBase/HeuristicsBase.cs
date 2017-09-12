@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Heuristics
 {
@@ -97,7 +98,7 @@ namespace Heuristics
 
         public static Random rand;
         #endregion
-        
+
         public HeuristicsBase()
         {
             rand = new Random();
@@ -117,70 +118,100 @@ namespace Heuristics
         /// </returns>
         public Tuple<double, double, double, double, double> avaliar(int[] solucao)
         {
-            double funcaoObjetivo = 0;
+            Task<double>[] funcoes = new Task<double>[4];
 
-            for (int i = 0; i < n; i++)
-                funcaoObjetivo += mVPL[i, solucao[i]];
+            funcoes[0] = new Task<double>(() =>
+            {
+                double funcaoObjetivo = 0;
+
+                for (int i = 0; i < n; i++)
+                    funcaoObjetivo += mVPL[i, solucao[i]];
+
+                return funcaoObjetivo;
+            });
 
             // Calcula restrição de volume
             // O(h*n) ~ O(r*n)
-            double restricaoVolume = 0;
 
-            for (int k = 0; k < h; k++)
+            funcoes[1] = new Task<double>(() =>
             {
-                double volume = 0;
+                double restricaoVolume = 0;
 
-                for (int i = 0; i < n; i++)
-                    if (mCorte[i, solucao[i], k])
-                        volume += mVolume[i, solucao[i], k];
+                for (int k = 0; k < h; k++)
+                {
+                    double volume = 0;
 
-                if (volume < volMin)
-                    restricaoVolume += (volMin - volume);
-                else if (volume > volMax)
-                    restricaoVolume += (volume - volMax);
-            }
+                    for (int i = 0; i < n; i++)
+                        if (mCorte[i, solucao[i], k])
+                            volume += mVolume[i, solucao[i], k];
+
+                    if (volume < volMin)
+                        restricaoVolume += (volMin - volume);
+                    else if (volume > volMax)
+                        restricaoVolume += (volume - volMax);
+                }
+
+                return restricaoVolume;
+            });
 
             // Calcula restrição de adjacência
             // O(h * n^2) ~ O(r*n^2)
-            double areaQuebra = 0;
 
-            for (int i = 0; i < n; i++)
-                for (int k = 0; k < h; k++)
-                    if (mCorte[i, solucao[i], k])
-                        foreach (int vizinho in talhoes[i].vizinhos)
-                            if (mCorte[vizinho, solucao[vizinho], k])
-                            {
-                                areaQuebra += talhoes[i].area;
+            funcoes[2] = new Task<double>(() =>
+            {
+                double areaQuebra = 0;
 
-                                break;
-                            }
+                for (int i = 0; i < n; i++)
+                    for (int k = 0; k < h; k++)
+                        if (mCorte[i, solucao[i], k])
+                            foreach (int vizinho in talhoes[i].vizinhos)
+                                if (mCorte[vizinho, solucao[vizinho], k])
+                                {
+                                    areaQuebra += talhoes[i].area;
+
+                                    break;
+                                }
+
+                return areaQuebra;
+            });
 
             // Calcula restrição de area de regulamentação
             // O(r*n)
-            double restricaoRegArea = 0;
 
-            for (int k = 0; k < r; k++)
+            funcoes[3] = new Task<double>(() =>
             {
-                double area = 0;
+                double restricaoRegArea = 0;
 
-                for (int i = 0; i < n; i++)
-                    area += mRegArea[i, solucao[i], k];
+                for (int k = 0; k < r; k++)
+                {
+                    double area = 0;
 
-                if (area > areaPorR_maisAlfaReg)
-                    restricaoRegArea += area - areaPorR_maisAlfaReg;
-                else if (area < areaPorR_menosAlfaReg)
-                    restricaoRegArea += areaPorR_menosAlfaReg - area;
-            }
+                    for (int i = 0; i < n; i++)
+                        area += mRegArea[i, solucao[i], k];
 
-            double funcaoAvalicao = funcaoObjetivo
-                - restricaoVolume * restricaoVolume * alfa
-                - areaQuebra * areaQuebra * beta
-                - restricaoRegArea * restricaoRegArea * gama;
+                    if (area > areaPorR_maisAlfaReg)
+                        restricaoRegArea += area - areaPorR_maisAlfaReg;
+                    else if (area < areaPorR_menosAlfaReg)
+                        restricaoRegArea += areaPorR_menosAlfaReg - area;
+                }
+
+                return restricaoRegArea;
+            });
+
+            foreach (var task in funcoes)
+                task.Start();
+
+            Task.WaitAll(funcoes);
+
+            double funcaoAvalicao = funcoes[0].Result
+                - funcoes[1].Result * funcoes[1].Result * alfa
+                - funcoes[2].Result * funcoes[2].Result * beta
+                - funcoes[3].Result * funcoes[3].Result * gama;
 
             return Tuple.Create<double, double, double, double, double>
-                (funcaoAvalicao, funcaoObjetivo, restricaoVolume, areaQuebra, restricaoRegArea);
+                (funcaoAvalicao, funcoes[0].Result, funcoes[1].Result, funcoes[2].Result, funcoes[3].Result);
         }
-        
+
         public int[] geraSolucaoAleatoria()
         {
             int[] solucao = new int[n];
