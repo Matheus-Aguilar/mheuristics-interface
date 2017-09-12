@@ -28,19 +28,16 @@ namespace Heuristics
 
         private double[] gerarProbabilidadesIniciais(int[][] solucoesIniciais)
         {
-            double soma = 0;
-            double[] probSolucoes = new double[n];
+            Task<double>[] funcoes = solucoesIniciais.Select(p => new Task<double>(() => avaliar(p).Item1)).ToArray();
 
-            for (int i = 0; i < populacaoInicial; i++)
-            {
-                probSolucoes[i] = avaliar(solucoesIniciais[i]).Item1;
-                soma += probSolucoes[i];
-            }
+            foreach (var task in funcoes)
+                task.Start();
 
-            for (int i = 0; i < populacaoInicial; i++)
-                probSolucoes[i] /= soma;
+            Task.WaitAll(funcoes);
 
-            return probSolucoes;
+            double sum = funcoes.Aggregate(0.0, (acc, p) => acc + p.Result);
+
+            return funcoes.Select(p => p.Result / sum).ToArray();
         }
 
         private void mutacao(int[] solucao)
