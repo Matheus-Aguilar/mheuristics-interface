@@ -224,5 +224,10 @@ namespace Heuristics
 
             return solucao;
         }
+
+        public virtual void Run()
+        {
+
+        }
     }
 }

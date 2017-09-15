@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using MahApps.Metro.Controls;
+using Microsoft.Win32;
 using OxyPlot.Axes;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,12 @@ namespace Interface
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
+        public event EventHandler HeuristicStarted;
+        public event EventHandler HeuristicEnded;
+        public Heuristics.HeuristicsBase Heuristic;
+        
         public MainWindow()
         {
             var dialog = new OpenFileDialog
@@ -44,125 +49,39 @@ namespace Interface
             };
 
             dialog.ShowDialog();
+
+            HeuristicStarted += MainWindow_HeuristicStarted;
+
+            HeuristicEnded += MainWindow_HeuristicEnded;
             
             InitializeComponent();
+
+            GeneticAlgorithm.mainWindow = this;
+            GeneticAlgorithm.Heuristics = Heuristic;
         }
 
-        private void StartHeuristics(int populacaoInicial, double taxaCruzamento, double taxaMutacao, int numIteracoes)
+        public void StartHeuristic()
         {
-            var plotFO = new OxyPlot.PlotModel();
-            var plotRR = new OxyPlot.PlotModel();
-            var plotRA = new OxyPlot.PlotModel();
-            var plotRV = new OxyPlot.PlotModel();
-            
-            plotFO.Axes.Add(new LinearAxis
-            {
-                Key = "xAxis",
-                Position = AxisPosition.Bottom,
-                Title = "Iterações"
-            });
+            HeuristicStarted?.Invoke(this, null);
+        }
 
-            plotRR.Axes.Add(new LinearAxis
-            {
-                Key = "xAxis",
-                Position = AxisPosition.Bottom,
-                Title = "Iterações"
-            });
-
-            plotRA.Axes.Add(new LinearAxis
-            {
-                Key = "xAxis",
-                Position = AxisPosition.Bottom,
-                Title = "Iterações"
-            });
-
-            plotRV.Axes.Add(new LinearAxis
-            {
-                Key = "xAxis",
-                Position = AxisPosition.Bottom,
-                Title = "Iterações"
-            });
-
-            plotFO.Axes.Add(new LinearAxis
-            {
-                Key = "yAxis",
-                Position = AxisPosition.Left,
-                Title = "Função objetivo"
-            });
-
-            plotRR.Axes.Add(new LinearAxis
-            {
-                Key = "yAxis",
-                Position = AxisPosition.Left,
-                Title = "Restrição de regulação de área"
-            });
-
-            plotRA.Axes.Add(new LinearAxis
-            {
-                Key = "yAxis",
-                Position = AxisPosition.Left,
-                Title = "Restrição de adjacencia"
-            });
-
-            plotRV.Axes.Add(new LinearAxis
-            {
-                Key = "yAxis",
-                Position = AxisPosition.Left,
-                Title = "Restrição de volume"
-            });
-
-            var serieFO = new OxyPlot.Series.LineSeries();
-            var serieRR = new OxyPlot.Series.LineSeries();
-            var serieRA = new OxyPlot.Series.LineSeries();
-            var serieRV = new OxyPlot.Series.LineSeries();
-
-            BackgroundWorker bkw = new BackgroundWorker();
-
-            bkw.DoWork += (sender, e) =>
-            {
-                var ga = new Heuristics.GeneticAlgorithm(populacaoInicial, taxaCruzamento, taxaMutacao, numIteracoes);
-
-                ga.Run();
-
-                int count = 1;
-                
-                foreach(var tupla in ga.Iteracoes)
-                {
-                    serieFO.Points.Add(new OxyPlot.DataPoint(count, tupla.Item2));
-                    serieRR.Points.Add(new OxyPlot.DataPoint(count, tupla.Item5));
-                    serieRA.Points.Add(new OxyPlot.DataPoint(count, tupla.Item4));
-                    serieRV.Points.Add(new OxyPlot.DataPoint(count, tupla.Item3));
-
-                    count++;
-                }
-            };
-
-            plotFO.Series.Add(serieFO);
-            plotRR.Series.Add(serieRR);
-            plotRA.Series.Add(serieRA);
-            plotRV.Series.Add(serieRV);
-
-            bkw.RunWorkerCompleted += (sender, e) =>
-            {
-                step2.Visibility = Visibility.Hidden;
-                step3.Visibility = Visibility.Visible;
-
-                plot_interface_1.Model = plotFO;
-                plot_interface_2.Model = plotRR;
-                plot_interface_3.Model = plotRA;
-                plot_interface_4.Model = plotRV;
-            };
-
-            
+        public void EndHeuristic()
+        {
+            HeuristicEnded?.Invoke(this, null);
+        }
+        
+        private void MainWindow_HeuristicStarted(object sender, EventArgs e)
+        {
             step1.Visibility = Visibility.Hidden;
             step2.Visibility = Visibility.Visible;
-            bkw.RunWorkerAsync();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void MainWindow_HeuristicEnded(object sender, EventArgs e)
         {
-            StartHeuristics(Convert.ToInt32(populacaoInicial.Text), Convert.ToDouble(taxaCruzamento.Text), 
-                Convert.ToDouble(taxaMutacao.Text), Convert.ToInt32(numIteracoes.Text));
+            Results.Overall.SetData(Heuristic.Iteracoes);
+
+            step2.Visibility = Visibility.Hidden;
+            step3.Visibility = Visibility.Visible;
         }
     }
 }

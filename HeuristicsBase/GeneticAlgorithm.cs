@@ -16,6 +16,10 @@ namespace Heuristics
         double taxaMutacao;
         int numIteracoes;
         int contIteracoes;
+        int semMelhora;
+        int[][] ultimaPopulacao;
+
+        public int[] solucao;
 
         public GeneticAlgorithm(int populacaoInicial = 20, double taxaCruzamento = 0.5, double taxaMutacao = 0.05, int numIteracoes = 200)
         {
@@ -115,11 +119,11 @@ namespace Heuristics
 
             int melhorPai = tasks[0].Result > tasks[1].Result ? 0 : 1;
             int melhorFilho = tasks[2].Result > tasks[3].Result ? 2 : 3;
-            
+
             if (tasks[melhorFilho].Result > tasks[melhorPai].Result)
             {
                 Iteracoes.Add(avaliar(solucoes[melhorFilho]));
-                
+
                 tasks = solucoesIniciais.Select(p => new Task<double>(() => avaliar(p).Item1)).ToArray();
 
                 foreach (Task task in tasks)
@@ -129,17 +133,33 @@ namespace Heuristics
 
                 int min = 0;
 
-                for(int k = 1; k < tasks.Length; k++)
+                for (int k = 1; k < tasks.Length; k++)
                     if (tasks[k].Result < tasks[min].Result)
                         min = k;
 
                 solucoesIniciais[min] = solucoes[melhorFilho];
 
+                ultimaPopulacao = (int[][])solucoesIniciais.Clone();
+
                 contIteracoes++;
+
+                semMelhora = 0;
+            }
+            else
+            {
+                semMelhora++;
+
+                if (semMelhora >= 100)
+                {
+                    solucoesIniciais = (int[][])ultimaPopulacao.Clone();
+
+                    semMelhora = 0;
+                    contIteracoes++;
+                }
             }
         }
 
-        public void Run()
+        public override void Run()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
@@ -200,6 +220,8 @@ namespace Heuristics
                     Imaior = k;
                 }
             }
+
+            solucao = solucoesIniciais[Imaior];
 
             watch.Stop();
 
