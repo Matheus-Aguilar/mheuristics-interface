@@ -53,7 +53,7 @@ namespace Interface.View
                 Key = "yAxis",
                 Position = AxisPosition.Left,
                 Title = "Valor",
-                MinimumPadding = 0.1,
+                Minimum = 0,
                 MaximumPadding = 0.1
             });
 
@@ -92,6 +92,7 @@ namespace Interface.View
                 Key = "yAxis",
                 Position = AxisPosition.Left,
                 Title = "Area (ha)",
+                Minimum = 0,
                 MinimumPadding = 0.1,
                 MaximumPadding = 0.1
             });
