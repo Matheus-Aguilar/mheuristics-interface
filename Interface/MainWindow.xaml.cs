@@ -82,6 +82,8 @@ namespace Interface
             Results.Overall.SetData(Heuristic.Iteracoes);
             Results.Details.SetData(Heuristic.solucao);
 
+            WindowState = WindowState.Maximized;
+
             step2.Visibility = Visibility.Hidden;
             step3.Visibility = Visibility.Visible;
         }

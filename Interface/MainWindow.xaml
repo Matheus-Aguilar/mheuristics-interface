@@ -4,11 +4,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Interface"
-        xmlns:oxy="http://oxyplot.org/wpf"
                       xmlns:view="clr-namespace:Interface.View"
                       mc:Ignorable="d"
-        Title="Interface de heurísticas" Height="350" Width="525">
+        Title="Interface de heurísticas" Height="350" Width="525" EnableDWMDropShadow="True">
     <Grid>
         <Grid Name="step1" Visibility="Visible">
             <view:GeneticAlgorithm x:Name="GeneticAlgorithm"/>
