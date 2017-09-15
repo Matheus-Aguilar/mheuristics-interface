@@ -19,8 +19,6 @@ namespace Heuristics
         int semMelhora;
         int[][] ultimaPopulacao;
 
-        public int[] solucao;
-
         public GeneticAlgorithm(int populacaoInicial = 20, double taxaCruzamento = 0.5, double taxaMutacao = 0.05, int numIteracoes = 200)
         {
             this.populacaoInicial = populacaoInicial;

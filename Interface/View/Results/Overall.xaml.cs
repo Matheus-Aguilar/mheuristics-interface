@@ -33,8 +33,6 @@ namespace Interface.View
             var plotRA = new OxyPlot.PlotModel();
             var plotRV = new OxyPlot.PlotModel();
 
-            var plotFlorestaRegulada = new OxyPlot.PlotModel();
-
             plotFO.Axes.Add(new LinearAxis
             {
                 Key = "xAxis",
@@ -61,13 +59,6 @@ namespace Interface.View
                 Key = "xAxis",
                 Position = AxisPosition.Bottom,
                 Title = "Iterações"
-            });
-
-            plotFlorestaRegulada.Axes.Add(new LinearAxis
-            {
-                Key = "xAxis",
-                Position = AxisPosition.Bottom,
-                Title = "Ano"
             });
 
             plotFO.Axes.Add(new LinearAxis
@@ -98,19 +89,10 @@ namespace Interface.View
                 Title = "Restrição de volume"
             });
 
-            plotFlorestaRegulada.Axes.Add(new LinearAxis
-            {
-                Key = "yAxis",
-                Position = AxisPosition.Bottom,
-                Title = "Area (ha)"
-            });
-
-            var serieFO = new OxyPlot.Series.LineSeries();
-            var serieRR = new OxyPlot.Series.LineSeries();
-            var serieRA = new OxyPlot.Series.LineSeries();
-            var serieRV = new OxyPlot.Series.LineSeries();
-
-            var serieFlorestaRegula = new OxyPlot.Series.LineSeries();
+            var serieFO = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false };
+            var serieRR = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false };
+            var serieRA = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false };
+            var serieRV = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false };
 
             int count = 1;
 
@@ -123,16 +105,7 @@ namespace Interface.View
 
                 count++;
             }
-
-            /*var sol = ga.solucao;
-
-            serieFlorestaRegula.Points.Add(new OxyPlot.DataPoint(1, sol.Select((p, idx) => Heuristics.HeuristicsBase.mRegArea[idx, p, 0]).Sum()));
-            serieFlorestaRegula.Points.Add(new OxyPlot.DataPoint(2, sol.Select((p, idx) => Heuristics.HeuristicsBase.mRegArea[idx, p, 1]).Sum()));
-            serieFlorestaRegula.Points.Add(new OxyPlot.DataPoint(3, sol.Select((p, idx) => Heuristics.HeuristicsBase.mRegArea[idx, p, 2]).Sum()));
-            serieFlorestaRegula.Points.Add(new OxyPlot.DataPoint(4, sol.Select((p, idx) => Heuristics.HeuristicsBase.mRegArea[idx, p, 3]).Sum()));
-            serieFlorestaRegula.Points.Add(new OxyPlot.DataPoint(5, sol.Select((p, idx) => Heuristics.HeuristicsBase.mRegArea[idx, p, 4]).Sum()));
-            serieFlorestaRegula.Points.Add(new OxyPlot.DataPoint(6, sol.Select((p, idx) => Heuristics.HeuristicsBase.mRegArea[idx, p, 5]).Sum()));*/
-
+            
             plotFO.Series.Add(serieFO);
             plotRR.Series.Add(serieRR);
             plotRA.Series.Add(serieRA);

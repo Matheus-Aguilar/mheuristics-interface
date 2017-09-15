@@ -7,6 +7,7 @@ namespace Heuristics
     public class HeuristicsBase
     {
         public List<Tuple<double, double, double, double, double>> Iteracoes = new List<Tuple<double, double, double, double, double>>();
+        public int[] solucao;
 
         #region var_declare
         /// <summary>
@@ -76,7 +77,7 @@ namespace Heuristics
         /// </summary>
         public static bool[,,] mCorte;
         /// <summary>
-        /// matriz que indica o volume do talhão i no ano j
+        /// matriz que indica o volume do talhão i sobre a prescrição j no ano k
         /// </summary>
         public static double[,,] mVolume;
         /// <summary>

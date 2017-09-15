@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using MahApps.Metro;
+using MahApps.Metro.Controls;
 using Microsoft.Win32;
 using OxyPlot.Axes;
 using System;
@@ -79,6 +80,7 @@ namespace Interface
         private void MainWindow_HeuristicEnded(object sender, EventArgs e)
         {
             Results.Overall.SetData(Heuristic.Iteracoes);
+            Results.Details.SetData(Heuristic.solucao);
 
             step2.Visibility = Visibility.Hidden;
             step3.Visibility = Visibility.Visible;
