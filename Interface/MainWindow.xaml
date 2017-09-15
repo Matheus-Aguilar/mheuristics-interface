@@ -8,7 +8,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
                       xmlns:view="clr-namespace:Interface.View"
                       mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Interface de heurísticas" Height="350" Width="525">
     <Grid>
         <Grid Name="step1" Visibility="Visible">
             <view:GeneticAlgorithm x:Name="GeneticAlgorithm"/>
