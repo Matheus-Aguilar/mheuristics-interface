@@ -4,15 +4,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:view="clr-namespace:Interface.View"
-                      mc:Ignorable="d"
-        Title="Interface de heurísticas" Height="350" Width="525" EnableDWMDropShadow="True">
+        xmlns:view="clr-namespace:Interface.View"
+        mc:Ignorable="d"
+        Title="Interface de metaheurísticas" Height="550" Width="725" EnableDWMDropShadow="True">
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout Header="Configurações" Position="Right" Width="400" IsModal="True" IsOpen="{Binding ElementName=Configuration, Path=isOpen, Mode=TwoWay}">
+                <view:Configuration x:Name="Configuration"/>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button x:Name="OpenConfigurations" Content="Configurações" Visibility="{Binding ElementName=step1, Path=Visibility}" Click="OpenConfigurations_Click" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
     <Grid>
-        <Grid Name="step1" Visibility="Visible">
+        <Grid Name="step0" Visibility="Visible">
+            <view:LoadData HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Grid>
+        <Grid Name="step1" Visibility="Hidden">
             <view:GeneticAlgorithm x:Name="GeneticAlgorithm"/>
         </Grid>
         <Grid Name="step2" Visibility="Hidden">
-            <TextBlock HorizontalAlignment="Left" Margin="207,150,0,0" TextWrapping="Wrap" Text="Executando..." VerticalAlignment="Top"/>
+            <Grid Width="150" Height="150">
+                <Controls:ProgressRing Foreground="{DynamicResource AccentColorBrush}"/>
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Executando..." VerticalAlignment="Bottom"/>
+            </Grid>
         </Grid>
         <Grid Name="step3" Grid.RowSpan="2" Grid.ColumnSpan="2" Visibility="Hidden">
             <view:Results x:Name="Results" />

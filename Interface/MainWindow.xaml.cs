@@ -29,36 +29,34 @@ namespace Interface
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        public event EventHandler HeuristicStarted;
-        public event EventHandler HeuristicEnded;
+        private event EventHandler HeuristicStarted;
+        private event EventHandler HeuristicEnded;
+        private event EventHandler DataLoaded;
         public Heuristics.HeuristicsBase Heuristic;
         
         public MainWindow()
         {
-            var dialog = new OpenFileDialog
-            {
-                Filter = "Arquivos de Excel|*.xlsx|Todos os arquivos|*.*"
-            };
-
-            dialog.FileOk += (sender, args) =>
-            {
-                Cursor = Cursors.Wait;
-
-                Heuristics.LoadClass.LoadXLSX(dialog.FileName);
-
-                Cursor = Cursors.Arrow;
-            };
-
-            dialog.ShowDialog();
-
             HeuristicStarted += MainWindow_HeuristicStarted;
 
             HeuristicEnded += MainWindow_HeuristicEnded;
+
+            DataLoaded += MainWindow_DataLoaded;
             
             InitializeComponent();
 
             GeneticAlgorithm.mainWindow = this;
             GeneticAlgorithm.Heuristics = Heuristic;
+        }
+
+        private void MainWindow_DataLoaded(object sender, EventArgs e)
+        {
+            step0.Visibility = Visibility.Hidden;
+            step1.Visibility = Visibility.Visible;
+        }
+
+        public void LoadedData()
+        {
+            DataLoaded?.Invoke(this, null);
         }
 
         public void StartHeuristic()
@@ -86,6 +84,11 @@ namespace Interface
 
             step2.Visibility = Visibility.Hidden;
             step3.Visibility = Visibility.Visible;
+        }
+
+        private void OpenConfigurations_Click(object sender, RoutedEventArgs e)
+        {
+            Configuration.isOpen = true;
         }
     }
 }
