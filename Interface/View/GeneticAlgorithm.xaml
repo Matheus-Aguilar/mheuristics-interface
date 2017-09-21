@@ -4,31 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Interface.View"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="400">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Grid Height="300" Width="300">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="populacaoInicial" VerticalAlignment="Center"/>
-        <TextBox x:Name="populacaoInicial" Grid.Column="1" Height="23" TextWrapping="Wrap" Text="20" VerticalAlignment="Center" Width="120" VerticalContentAlignment="Stretch"/>
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="taxaCruzamento" VerticalAlignment="Center" Grid.Row="1"/>
-        <TextBox x:Name="taxaCruzamento" Grid.Column="1" Height="23" TextWrapping="Wrap" Text="0,5" VerticalAlignment="Center" Width="120" Grid.Row="1"/>
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="taxaMutacao" VerticalAlignment="Center" Grid.Row="2"/>
-        <TextBox x:Name="taxaMutacao" Grid.Column="1" Height="23" TextWrapping="Wrap" Text="0,05" VerticalAlignment="Center" Width="120" Grid.Row="2"/>
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="numIteracoes" VerticalAlignment="Center" Grid.Row="3"/>
-        <TextBox x:Name="numIteracoes" Grid.Column="1" Height="23" TextWrapping="Wrap" Text="400" VerticalAlignment="Center" Width="120" Grid.Row="3"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="População inicial" VerticalAlignment="Center"/>
+            <Controls:NumericUpDown Value="{Binding populacaoInicial, Mode=TwoWay}" Grid.Column="1" Height="23" VerticalAlignment="Center" Width="120" VerticalContentAlignment="Stretch"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Taxa de cruzamento" VerticalAlignment="Center" Grid.Row="1"/>
+            <Controls:NumericUpDown Value="{Binding taxaCruzamento, Mode=TwoWay}" StringFormat="F5" Grid.Column="1" Height="23" VerticalAlignment="Center" Width="120" Grid.Row="1"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Taxa de mutação" VerticalAlignment="Center" Grid.Row="2"/>
+            <Controls:NumericUpDown Value="{Binding taxaMutacao, Mode=TwoWay}" StringFormat="F3" Grid.Column="1" Height="23" VerticalAlignment="Center" Width="120" Grid.Row="2"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Número de iterações" VerticalAlignment="Center" Grid.Row="3"/>
+            <Controls:NumericUpDown Value="{Binding numIteracoes, Mode=TwoWay}" Grid.Column="1" Height="23" VerticalAlignment="Center" Width="120" Grid.Row="3"/>
 
-        <Button Grid.ColumnSpan="2" Content="Iniciar heuristica" HorizontalAlignment="Center" Margin="0" Grid.Row="4" 
-                    VerticalAlignment="Center" Width="137" Click="Button_Click"/>
+            <Button Grid.ColumnSpan="2" Content="Iniciar heuristica" HorizontalAlignment="Center" Margin="0" Grid.Row="4" 
+                        VerticalAlignment="Center" Width="137" Click="Button_Click"/>
+        </Grid>
     </Grid>
 </UserControl>

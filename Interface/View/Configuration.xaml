@@ -23,19 +23,19 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Label Content="Volume mínimo" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="0" Grid.Column="2" StringFormat="N2" VerticalAlignment="Center" Width="Auto" Value="{Binding volumeMinimo, Mode=TwoWay}"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="0" Grid.Column="2" StringFormat="F2" VerticalAlignment="Center" Width="Auto" Value="{Binding volumeMinimo, Mode=TwoWay}"/>
         <Label Content="Volume máximo" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="1" Grid.Column="2" StringFormat="N2" VerticalAlignment="Center" Width="Auto" Value="{Binding volumeMaximo, Mode=TwoWay}"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="1" Grid.Column="2" StringFormat="F2" VerticalAlignment="Center" Width="Auto" Value="{Binding volumeMaximo, Mode=TwoWay}"/>
         <Label Content="Alfa" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="2" Grid.Column="2" StringFormat="N6" VerticalAlignment="Center" Width="Auto" Value="{Binding alfa, Mode=TwoWay}"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="2" Grid.Column="2" StringFormat="F6" VerticalAlignment="Center" Width="Auto" Value="{Binding alfa, Mode=TwoWay}"/>
         <Label Content="Beta" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="3" Grid.Column="2" StringFormat="N6" VerticalAlignment="Center" Width="Auto" Value="{Binding beta, Mode=TwoWay}"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="3" Grid.Column="2" StringFormat="F6" VerticalAlignment="Center" Width="Auto" Value="{Binding beta, Mode=TwoWay}"/>
         <Label Content="Gama" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="4" Grid.Column="2" StringFormat="N6" VerticalAlignment="Center" Width="Auto" Value="{Binding gama, Mode=TwoWay}"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="4" Grid.Column="2" StringFormat="F6" VerticalAlignment="Center" Width="Auto" Value="{Binding gama, Mode=TwoWay}"/>
         <Label Content="Área de regulação mínima" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="5" Grid.Column="2" StringFormat="N2" VerticalAlignment="Center" Width="Auto" Value="{Binding areaMinima, Mode=TwoWay}"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="5" Grid.Column="2" StringFormat="F5" VerticalAlignment="Center" Width="Auto" Value="{Binding areaMinima, Mode=TwoWay}"/>
         <Label Content="Área de regulação máxima" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="6" Grid.Column="2" StringFormat="N2" VerticalAlignment="Center" Width="Auto" Value="{Binding areaMaxima, Mode=TwoWay}"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="6" Grid.Column="2" StringFormat="F5" VerticalAlignment="Center" Width="Auto" Value="{Binding areaMaxima, Mode=TwoWay}"/>
         <Button Grid.ColumnSpan="2" Content="Salvar" HorizontalAlignment="Center" Margin="0" Grid.Row="8" 
                     VerticalAlignment="Bottom" Click="Button_Click" Width="100" VerticalContentAlignment="Center"/>
     </Grid>

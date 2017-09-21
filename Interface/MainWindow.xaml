@@ -22,10 +22,10 @@
     </Controls:MetroWindow.RightWindowCommands>
     <Grid>
         <Grid Name="step0" Visibility="Visible">
-            <view:LoadData HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <view:LoadData HorizontalContentAlignment="Center" />
         </Grid>
         <Grid Name="step1" Visibility="Hidden">
-            <view:GeneticAlgorithm x:Name="GeneticAlgorithm"/>
+            <view:GeneticAlgorithm x:Name="GeneticAlgorithm" />
         </Grid>
         <Grid Name="step2" Visibility="Hidden">
             <Grid Width="150" Height="150">
