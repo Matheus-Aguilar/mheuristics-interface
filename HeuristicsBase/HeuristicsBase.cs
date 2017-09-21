@@ -96,6 +96,11 @@ namespace Heuristics
         public static double areaPorR;
         public static double areaPorR_maisAlfaReg;
         public static double areaPorR_menosAlfaReg;
+        
+        /// <summary>
+        /// booleano que indica se a função de avaliação leva em consideração area de adjacencia ou IAC
+        /// </summary>
+        public static bool areaAdjacencia;
 
         public static Random rand;
         #endregion
@@ -160,20 +165,51 @@ namespace Heuristics
 
             funcoes[2] = new Task<double>(() =>
             {
-                double areaQuebra = 0;
+                if (areaAdjacencia)
+                {
+                    double areaQuebra = 0;
 
-                for (int i = 0; i < n; i++)
-                    for (int k = 0; k < h; k++)
-                        if (mCorte[i, solucao[i], k])
-                            foreach (int vizinho in talhoes[i].vizinhos)
-                                if (mCorte[vizinho, solucao[vizinho], k])
-                                {
-                                    areaQuebra += talhoes[i].area;
+                    for (int i = 0; i < n; i++)
+                        for (int k = 0; k < h; k++)
+                            if (mCorte[i, solucao[i], k])
+                                foreach (int vizinho in talhoes[i].vizinhos)
+                                    if (mCorte[vizinho, solucao[vizinho], k])
+                                    {
+                                        areaQuebra += talhoes[i].area;
 
-                                    break;
-                                }
+                                        break;
+                                    }
 
-                return areaQuebra;
+                    return areaQuebra;
+                }
+                else
+                {
+                    double IAC = 0;
+                    double area2;
+                    double distMaisProximo;
+                    double areasCortadas = 0;
+
+                    for (int i = 0; i < h; i++)
+                        for (int j = 0; j < n; j++)
+                            if (mCorte[j, solucao[j], i])
+                            {
+                                areasCortadas += talhoes[i].area * talhoes[i].area;
+
+                                area2 = talhoes[j].area * talhoes[j].area;
+
+                                distMaisProximo = Double.PositiveInfinity;
+
+                                for(int k = 0; k < n; k++)
+                                    if (k != j && mCorte[k, solucao[k], i])
+                                        distMaisProximo = Math.Min(distMaisProximo, mDistancia[j, k]);
+
+                                distMaisProximo /= 1000;
+
+                                IAC += area2 / (distMaisProximo * distMaisProximo);
+                            }
+                    
+                    return IAC / areasCortadas;
+                }
             });
 
             // Calcula restrição de area de regulamentação
@@ -206,7 +242,7 @@ namespace Heuristics
 
             double funcaoAvalicao = funcoes[0].Result
                 - funcoes[1].Result * funcoes[1].Result * alfa
-                - funcoes[2].Result * funcoes[2].Result * beta
+                - funcoes[0].Result * funcoes[2].Result * beta
                 - funcoes[3].Result * funcoes[3].Result * gama;
 
             return Tuple.Create<double, double, double, double, double>

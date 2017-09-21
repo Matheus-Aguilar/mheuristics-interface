@@ -49,6 +49,7 @@ namespace Heuristics
             HeuristicsBase.areaTotal = areaTotal;
             HeuristicsBase.alfa = alfa;
             HeuristicsBase.beta = beta;
+            HeuristicsBase.gama = gama;
 
             areaPorR = areaTotal / r;
             areaPorR_maisAlfaReg = areaPorR * (1 + alfaRegArea);
@@ -92,7 +93,7 @@ namespace Heuristics
                 talhoes[i].area = Convert.ToDouble(values[i * m + 1, 2]);
                 talhoes[i].id = Convert.ToInt32(values[i * m + 1, 1]);
                 talhoes[i].idade = Convert.ToInt32(values[i * m + 1, 3]);
-                talhoes[i].regime = (string) values[i * m + 12, 4];
+                talhoes[i].regime = (string)values[i * m + 12, 4];
             }
 
             worksheet = (Excel.Worksheet)workbook.Sheets["mCorte"];
@@ -104,7 +105,7 @@ namespace Heuristics
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
                     for (int k = 0; k < h; k++)
-                        mCorte[i, j, k] = Convert.ToInt32(Convert.ToDouble( values[i * m + j + 1, k + 1])) == 1;
+                        mCorte[i, j, k] = Convert.ToInt32(Convert.ToDouble(values[i * m + j + 1, k + 1])) == 1;
 
             worksheet = (Excel.Worksheet)workbook.Sheets["mRegArea"];
 
@@ -139,6 +140,17 @@ namespace Heuristics
                     if (Convert.ToInt32(Convert.ToDouble(values[i + 1, j + 1])) == 1)
                         talhoes[i].vizinhos.Add(j);
 
+            worksheet = (Excel.Worksheet)workbook.Sheets["mDistancia"];
+
+            range = worksheet.get_Range(CellFormat(2, 1), CellFormat(n * n + 2, 3));
+
+            values = range.Value2;
+
+            int n2 = n * n;
+
+            for (int i = 0; i < n2; i++)
+                mDistancia[Convert.ToInt32(values[i + 1, 1]) - 1, Convert.ToInt32(values[i + 1, 2]) - 1] = Convert.ToDouble(values[i + 1, 3]);
+
             worksheet = (Excel.Worksheet)workbook.Sheets["Dados"];
 
             double volMin = Convert.ToDouble(worksheet.Cells[8, 1].Value2);
@@ -166,7 +178,7 @@ namespace Heuristics
             {
                 col = col + Convert.ToChar((int)column % 26 + 64);
                 column /= 26;
-            } 
+            }
 
             return col + row;
         }

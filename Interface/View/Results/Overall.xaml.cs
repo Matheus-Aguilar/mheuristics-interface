@@ -79,7 +79,7 @@ namespace Interface.View
             {
                 Key = "yAxis",
                 Position = AxisPosition.Left,
-                Title = "Restrição de adjacencia"
+                Title = "IAC"
             });
 
             plotRV.Axes.Add(new LinearAxis

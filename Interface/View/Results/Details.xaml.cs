@@ -97,10 +97,11 @@ namespace Interface.View
                 MaximumPadding = 0.1
             });
 
-            var serieAdjacencia = new OxyPlot.Series.LineSeries { Title = "Area adjacente cortada no mesmo ano", StrokeThickness = 2, CanTrackerInterpolatePoints = false };
-
             double[] valores = new double[Heuristics.HeuristicsBase.h];
 
+            /*
+            var serieAdjacencia = new OxyPlot.Series.LineSeries { Title = "Quebra de adjacência", StrokeThickness = 2, Color = OxyPlot.OxyColor.FromRgb(0, 0, 255), CanTrackerInterpolatePoints = false };
+            
             for (int i = 0; i < Heuristics.HeuristicsBase.n; i++)
                 for (int k = 0; k < Heuristics.HeuristicsBase.h; k++)
                     if (Heuristics.HeuristicsBase.mCorte[i, solucao[i], k])
@@ -116,6 +117,40 @@ namespace Interface.View
                 serieAdjacencia.Points.Add(new OxyPlot.DataPoint(i + 1, valores[i]));
             
             plotAdjacencia.Series.Add(serieAdjacencia);
+            */
+
+            var serieIAC = new OxyPlot.Series.LineSeries { Title = "IAC por ano", StrokeThickness = 2, CanTrackerInterpolatePoints = false };
+
+            double IAC, area2, distMaisProximo, areasCortadas;
+
+            for (int i = 0; i < Heuristics.HeuristicsBase.h; i++)
+            {
+                IAC = areasCortadas = 0;
+
+                for (int j = 0; j < Heuristics.HeuristicsBase.n; j++)
+                    if (Heuristics.HeuristicsBase.mCorte[j, solucao[j], i])
+                    {
+                        areasCortadas += Heuristics.HeuristicsBase.talhoes[j].area * Heuristics.HeuristicsBase.talhoes[j].area;
+                        area2 = Heuristics.HeuristicsBase.talhoes[j].area * Heuristics.HeuristicsBase.talhoes[j].area;
+
+                        distMaisProximo = Double.PositiveInfinity;
+
+                        for (int k = 0; k < Heuristics.HeuristicsBase.n; k++)
+                            if (k != j && Heuristics.HeuristicsBase.mCorte[k, solucao[k], i])
+                                distMaisProximo = Math.Min(distMaisProximo, Heuristics.HeuristicsBase.mDistancia[j, k]);
+
+                        distMaisProximo /= 1000;
+
+                        IAC += area2 / (distMaisProximo * distMaisProximo);
+                    }
+
+                valores[i] = IAC / areasCortadas;
+            }
+
+            for (var i = 0; i < Heuristics.HeuristicsBase.h; i++)
+                serieIAC.Points.Add(new OxyPlot.DataPoint(i + 1, valores[i]));
+
+            plotAdjacencia.Series.Add(serieIAC);
 
             plot_interface_3.Model = plotAdjacencia;
         }
