@@ -51,6 +51,9 @@ namespace Interface
         private void MainWindow_DataLoaded(object sender, EventArgs e)
         {
             step0.Visibility = Visibility.Hidden;
+
+            Configuration.Reload();
+
             step1.Visibility = Visibility.Visible;
         }
 
@@ -89,6 +92,25 @@ namespace Interface
         private void OpenConfigurations_Click(object sender, RoutedEventArgs e)
         {
             Configuration.isOpen = true;
+        }
+
+        private void ExportJSON_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "Arquivos JSON|*.json|Todos os arquivos|*.*"
+            };
+
+            dialog.FileOk += (_, __) =>
+            {
+                Cursor = Cursors.Wait;
+
+                Heuristics.ExportData.Export(dialog.FileName);
+
+                Cursor = Cursors.Arrow;
+            };
+
+            dialog.ShowDialog();
         }
     }
 }

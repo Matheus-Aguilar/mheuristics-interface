@@ -35,7 +35,14 @@ namespace Interface.View
         public Configuration()
         {
             DataContext = this;
+            
+            isOpen = false;
 
+            InitializeComponent();
+        }
+
+        public void Reload()
+        {
             volumeMinimo = Heuristics.HeuristicsBase.volMin;
             volumeMaximo = Heuristics.HeuristicsBase.volMax;
             alfa = Heuristics.HeuristicsBase.alfa;
@@ -43,10 +50,6 @@ namespace Interface.View
             gama = Heuristics.HeuristicsBase.gama;
             areaMinima = Heuristics.HeuristicsBase.areaPorR_menosAlfaReg;
             areaMaxima = Heuristics.HeuristicsBase.areaPorR_maisAlfaReg;
-            
-            isOpen = false;
-
-            InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

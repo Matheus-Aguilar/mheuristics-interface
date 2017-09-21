@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,93 +11,117 @@ namespace Heuristics
         public int[] solucao;
 
         #region var_declare
+        [JsonProperty]
         /// <summary>
         /// número de talhões
         /// </summary>
         public static int n;
+        [JsonProperty]
         /// <summary>
         /// não sei o que essa variável faz
         /// </summary>
         public static int nAf;
+        [JsonProperty]
         /// <summary>
         /// número de talhões cortados por autofuste e talhadia
         /// </summary>
         public static int nTa;
+        [JsonProperty]
         /// <summary>
         /// número de prescrições
         /// </summary>
         public static int m;
+        [JsonProperty]
         /// <summary>
         /// horizonte de planejamento -- h = 3 * r
         /// </summary>
         public static int h;
+        [JsonProperty]
         /// <summary>
         /// idade regulatória
         /// </summary>
         public static int r;
 
+        [JsonProperty]
         /// <summary>
         /// volume mínimo
         /// </summary>
         public static double volMin = 100000;
+        [JsonProperty]
         /// <summary>
         /// volume máximo
         /// </summary>
         public static double volMax = 300000;
+        [JsonProperty]
         /// <summary>
         /// variação permitida da regulação de área
         /// </summary>
         public static double alfaRegArea = 0.20;
+        [JsonProperty]
         /// <summary>
         /// área total da fazenda em hectaes
         /// </summary>
         public static double areaTotal = 1892.08;
+        [JsonProperty]
         /// <summary>
         /// coeficiente da restrição de volume
         /// </summary>
         public static double alfa = 0.00001;
+        [JsonProperty]
         /// <summary>
         /// coeficiente da restrição de adjacencia
         /// </summary>
         public static double beta = 0.001;
+        [JsonProperty]
         /// <summary>
         /// coeficiente da restrição de regulação de área
         /// </summary>
         public static double gama = 0.1; // coeficientes
 
+        [JsonProperty]
         /// <summary>
         /// vetor de talhões
         /// </summary>
         public static Talhao[] talhoes;
+        [JsonProperty]
         /// <summary>
         /// matriz de VPLs
         /// </summary>
         public static double[,] mVPL;
+        [JsonProperty]
         /// <summary>
         /// matriz que indica se o talhão i sobre a prescrição j será cortado no ano k
         /// </summary>
         public static bool[,,] mCorte;
+        [JsonProperty]
         /// <summary>
         /// matriz que indica o volume do talhão i sobre a prescrição j no ano k
         /// </summary>
         public static double[,,] mVolume;
+        [JsonProperty]
         /// <summary>
         /// matriz que indica se o talhão i é adjacente ao talhão j
         /// </summary>
         public static bool[,] mAdj;
+        [JsonProperty]
         /// <summary>
         /// matriz que indica a distância do talhão i ao talhão j
         /// </summary>
         public static double[,] mDistancia;
+        [JsonProperty]
         /// <summary>
         /// matriz que indica a área do talhao i na prescricao j com a idade regulatória k
         /// </summary>
         public static double[,,] mRegArea;
 
+        [JsonProperty]
         public static double areaPorR;
+        [JsonProperty]
         public static double areaPorR_maisAlfaReg;
+        [JsonProperty]
         public static double areaPorR_menosAlfaReg;
-        
+
+        [JsonProperty]
         /// <summary>
         /// booleano que indica se a função de avaliação leva em consideração area de adjacencia ou IAC
         /// </summary>

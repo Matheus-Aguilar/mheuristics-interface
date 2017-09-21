@@ -242,7 +242,7 @@ namespace Heuristics
 
             writer.Close();
 
-            Process.Start(Path.GetDirectoryName(Assembly.GetCallingAssembly().Location) + @"\solucaoGA.txt");
+            //Process.Start(Path.GetDirectoryName(Assembly.GetCallingAssembly().Location) + @"\solucaoGA.txt");
         }
     }
 }

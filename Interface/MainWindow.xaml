@@ -16,6 +16,7 @@
     </Controls:MetroWindow.Flyouts>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
+            <Button x:Name="ExportJSON" Content="Exportar instância" Visibility="{Binding ElementName=step1, Path=Visibility}" Click="ExportJSON_Click"/>
             <Button x:Name="OpenConfigurations" Content="Configurações" Visibility="{Binding ElementName=step1, Path=Visibility}" Click="OpenConfigurations_Click" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>

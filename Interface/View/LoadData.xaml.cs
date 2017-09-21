@@ -50,5 +50,26 @@ namespace Interface.View
 
             dialog.ShowDialog();
         }
+
+        private void LoadJSON_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Filter = "Arquivos JSON|*.json|Todos os arquivos|*.*"
+            };
+
+            dialog.FileOk += (_, __) =>
+            {
+                Cursor = Cursors.Wait;
+
+                Heuristics.LoadClass.LoadJSON(dialog.FileName);
+
+                ((MainWindow)Application.Current.MainWindow).LoadedData();
+
+                Cursor = Cursors.Arrow;
+            };
+
+            dialog.ShowDialog();
+        }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Heuristics
@@ -137,8 +140,12 @@ namespace Heuristics
 
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++)
+                {
                     if (Convert.ToInt32(Convert.ToDouble(values[i + 1, j + 1])) == 1)
                         talhoes[i].vizinhos.Add(j);
+
+                    mAdj[i,j] = Convert.ToInt32(Convert.ToDouble(values[i + 1, j + 1])) == 1;
+                }
 
             worksheet = (Excel.Worksheet)workbook.Sheets["mDistancia"];
 
@@ -181,6 +188,26 @@ namespace Heuristics
             }
 
             return col + row;
+        }
+
+        public static void LoadJSON(string filename)
+        {
+            var reader = new StreamReader(filename, Encoding.ASCII);
+
+            string json;
+
+            try
+            {
+                json = reader.ReadToEnd();
+
+                JsonConvert.DeserializeObject<HeuristicsBase>(json);
+            }
+            catch
+            {
+
+            }
+
+            reader.Close();
         }
     }
 }
