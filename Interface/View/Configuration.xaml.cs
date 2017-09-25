@@ -28,8 +28,7 @@ namespace Interface.View
         public double alfa { get; set; }
         public double beta { get; set; }
         public double gama { get; set; }
-        public double areaMinima { get; set; }
-        public double areaMaxima { get; set; }
+        public double alfaRegArea { get; set; }
         public bool isOpen { get; set; }
 
         public Configuration()
@@ -48,8 +47,7 @@ namespace Interface.View
             alfa = Heuristics.HeuristicsBase.alfa;
             beta = Heuristics.HeuristicsBase.beta;
             gama = Heuristics.HeuristicsBase.gama;
-            areaMinima = Heuristics.HeuristicsBase.areaPorR_menosAlfaReg;
-            areaMaxima = Heuristics.HeuristicsBase.areaPorR_maisAlfaReg;
+            alfaRegArea = Heuristics.HeuristicsBase.alfaRegArea;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -59,8 +57,9 @@ namespace Interface.View
             Heuristics.HeuristicsBase.alfa = alfa;
             Heuristics.HeuristicsBase.beta = beta;
             Heuristics.HeuristicsBase.gama = gama;
-            Heuristics.HeuristicsBase.areaPorR_menosAlfaReg = areaMinima;
-            Heuristics.HeuristicsBase.areaPorR_maisAlfaReg = areaMaxima;
+            Heuristics.HeuristicsBase.alfaRegArea = alfaRegArea;
+            Heuristics.HeuristicsBase.areaPorR_menosAlfaReg = Heuristics.HeuristicsBase.areaPorR * (1 - alfaRegArea);
+            Heuristics.HeuristicsBase.areaPorR_maisAlfaReg = Heuristics.HeuristicsBase.areaPorR * (1 + alfaRegArea);
 
             isOpen = false;
         }
