@@ -44,8 +44,8 @@ namespace Interface
             
             InitializeComponent();
 
-            GeneticAlgorithm.mainWindow = this;
-            GeneticAlgorithm.Heuristics = Heuristic;
+            HeuristicsView.mainWindow = this;
+            HeuristicsView.Heuristic = Heuristic;
         }
 
         private void MainWindow_DataLoaded(object sender, EventArgs e)

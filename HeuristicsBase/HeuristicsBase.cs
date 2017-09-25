@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Heuristics
@@ -279,10 +280,8 @@ namespace Heuristics
             int[] solucao = new int[n];
 
             do
-            {
-                for (int i = 0; i < n; i++)
-                    solucao[i] = rand.Next(0, nAf);
-            } while (avaliar(solucao).Item1 < 0);
+                solucao = solucao.Select(_ => rand.Next(nAf)).ToArray();
+            while (avaliar(solucao).Item1 < 0);
 
             return solucao;
         }

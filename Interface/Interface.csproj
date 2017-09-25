@@ -75,13 +75,19 @@
     <Compile Include="View\Configuration.xaml.cs">
       <DependentUpon>Configuration.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Heuristics\SimulatedAnnealing.xaml.cs">
+      <DependentUpon>SimulatedAnnealing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HeuristicsView.xaml.cs">
+      <DependentUpon>HeuristicsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoadData.xaml.cs">
       <DependentUpon>LoadData.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Results\Details.xaml.cs">
       <DependentUpon>Details.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GeneticAlgorithm.xaml.cs">
+    <Compile Include="View\Heuristics\GeneticAlgorithm.xaml.cs">
       <DependentUpon>GeneticAlgorithm.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Results\Overall.xaml.cs">
@@ -106,6 +112,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Heuristics\SimulatedAnnealing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\HeuristicsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\LoadData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,7 +128,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\GeneticAlgorithm.xaml">
+    <Page Include="View\Heuristics\GeneticAlgorithm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
