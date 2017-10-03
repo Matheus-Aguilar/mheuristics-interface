@@ -13,15 +13,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Heuristics;
 
 namespace Interface.View
 {
     /// <summary>
     /// Interaction logic for GeneticAlgorithm.xaml
     /// </summary>
-    public partial class GeneticAlgorithm : UserControl, INotifyPropertyChanged
+    public partial class GeneticAlgorithmView : UserControl, INotifyPropertyChanged
     {
-        public Heuristics.HeuristicsBase Heuristics;
+        public HeuristicsBase Heuristics;
         public MainWindow mainWindow;
         
         public int populacaoInicial { get; set; }
@@ -31,7 +32,7 @@ namespace Interface.View
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GeneticAlgorithm()
+        public GeneticAlgorithmView()
         {
             DataContext = this;
 
@@ -49,7 +50,9 @@ namespace Interface.View
 
             mainWindow.StartHeuristic();
 
-            mainWindow.Heuristic = new Heuristics.GeneticAlgorithm(this.populacaoInicial, taxaCruzamento, taxaMutacao, numIteracoes);
+            mainWindow.Heuristic = new GeneticAlgorithm(this.populacaoInicial, taxaCruzamento, taxaMutacao, numIteracoes);
+            
+            var watch = System.Diagnostics.Stopwatch.StartNew();
 
             bkw.DoWork += (_, __) =>
             {
@@ -58,6 +61,10 @@ namespace Interface.View
 
             bkw.RunWorkerCompleted += (_, __) =>
             {
+                watch.Stop();
+
+                mainWindow.Results.TempoExecucao = "Tempo de execução: " + watch.Elapsed.ToString("c");
+
                 mainWindow.EndHeuristic();
             };
 

@@ -148,8 +148,11 @@ namespace Heuristics
         /// <param name="solucao">Vetor contendo a prescrição para cada talhão</param>
         /// <returns>
         /// </returns>
-        public Tuple<double, double, double, double, double> avaliar(int[] solucao)
+        public Tuple<double, double, double, double, double> avaliar(int[] solucao, int n = 0)
         {
+            if (n == 0)
+                n = HeuristicsBase.n;
+
             Task<double>[] funcoes = new Task<double>[4];
 
             funcoes[0] = new Task<double>(() =>

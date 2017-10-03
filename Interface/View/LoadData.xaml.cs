@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Heuristics;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,7 +42,7 @@ namespace Interface.View
             {
                 Cursor = Cursors.Wait;
 
-                Heuristics.LoadClass.LoadXLSX(dialog.FileName);
+                LoadClass.LoadXLSX(dialog.FileName);
 
                 ((MainWindow)Application.Current.MainWindow).LoadedData();
 
@@ -62,7 +63,7 @@ namespace Interface.View
             {
                 Cursor = Cursors.Wait;
 
-                Heuristics.LoadClass.LoadJSON(dialog.FileName);
+                LoadClass.LoadJSON(dialog.FileName);
 
                 ((MainWindow)Application.Current.MainWindow).LoadedData();
 

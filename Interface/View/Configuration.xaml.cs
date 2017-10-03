@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Heuristics;
 
 namespace Interface.View
 {
@@ -30,6 +31,7 @@ namespace Interface.View
         public double gama { get; set; }
         public double alfaRegArea { get; set; }
         public bool isOpen { get; set; }
+        public int restricaoAdj { get; set; }
 
         public Configuration()
         {
@@ -42,24 +44,27 @@ namespace Interface.View
 
         public void Reload()
         {
-            volumeMinimo = Heuristics.HeuristicsBase.volMin;
-            volumeMaximo = Heuristics.HeuristicsBase.volMax;
-            alfa = Heuristics.HeuristicsBase.alfa;
-            beta = Heuristics.HeuristicsBase.beta;
-            gama = Heuristics.HeuristicsBase.gama;
-            alfaRegArea = Heuristics.HeuristicsBase.alfaRegArea;
+            volumeMinimo = HeuristicsBase.volMin;
+            volumeMaximo = HeuristicsBase.volMax;
+            alfa = HeuristicsBase.alfa;
+            beta = HeuristicsBase.beta;
+            gama = HeuristicsBase.gama;
+            alfaRegArea = HeuristicsBase.alfaRegArea;
+
+            restricaoAdj = HeuristicsBase.areaAdjacencia ? 1 : 0;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Heuristics.HeuristicsBase.volMin = volumeMinimo;
-            Heuristics.HeuristicsBase.volMax = volumeMaximo;
-            Heuristics.HeuristicsBase.alfa = alfa;
-            Heuristics.HeuristicsBase.beta = beta;
-            Heuristics.HeuristicsBase.gama = gama;
-            Heuristics.HeuristicsBase.alfaRegArea = alfaRegArea;
-            Heuristics.HeuristicsBase.areaPorR_menosAlfaReg = Heuristics.HeuristicsBase.areaPorR * (1 - alfaRegArea);
-            Heuristics.HeuristicsBase.areaPorR_maisAlfaReg = Heuristics.HeuristicsBase.areaPorR * (1 + alfaRegArea);
+            HeuristicsBase.volMin = volumeMinimo;
+            HeuristicsBase.volMax = volumeMaximo;
+            HeuristicsBase.alfa = alfa;
+            HeuristicsBase.beta = beta;
+            HeuristicsBase.gama = gama;
+            HeuristicsBase.alfaRegArea = alfaRegArea;
+            HeuristicsBase.areaPorR_menosAlfaReg = HeuristicsBase.areaPorR * (1 - alfaRegArea);
+            HeuristicsBase.areaPorR_maisAlfaReg = HeuristicsBase.areaPorR * (1 + alfaRegArea);
+            HeuristicsBase.areaAdjacencia = restricaoAdj == 1;
 
             isOpen = false;
         }

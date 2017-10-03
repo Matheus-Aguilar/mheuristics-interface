@@ -15,14 +15,11 @@ namespace Heuristics
         int cont = 0;
         int opt = 2;
 
-        int selecionaPresc(int[] solucao, int pos)
+        int selecionaPresc(ref int[] solucao, int pos)
         {
             int prescAntiga = solucao[pos];
 
             double[] probVPL = new double [m];
-
-            //var desvio = Math.Sqrt(probVPL.Select((p, idx) => mVPL[pos, idx])
-            //    .Aggregate(0.0, (agg, p) => Math.Pow(p - mVPL[pos, prescAntiga], 2)) / m);
 
             probVPL = probVPL.Select((p, idx) => Math.Abs(mVPL[pos, idx] - mVPL[pos, prescAntiga])).ToArray();
 
@@ -68,8 +65,8 @@ namespace Heuristics
 
                 Task<int>[] funcoes = new Task<int>[2];
 
-                funcoes[0] = new Task<int>(() => selecionaPresc(novaSolucao, rndPosicao));
-                funcoes[1] = new Task<int>(() => selecionaPresc(novaSolucao, rndPosicao2));
+                funcoes[0] = new Task<int>(() => selecionaPresc(ref novaSolucao, rndPosicao));
+                funcoes[1] = new Task<int>(() => selecionaPresc(ref novaSolucao, rndPosicao2));
 
                 foreach (var task in funcoes)
                     task.Start();
@@ -81,7 +78,7 @@ namespace Heuristics
             }
             else
             {
-                novaSolucao[rndPosicao] = selecionaPresc(novaSolucao, rndPosicao);
+                novaSolucao[rndPosicao] = selecionaPresc(ref novaSolucao, rndPosicao);
             }
 
             Task<double>[] avaliacoes = new Task<double>[2];

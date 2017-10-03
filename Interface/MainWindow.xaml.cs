@@ -21,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Heuristics;
 
 namespace Interface
 {
@@ -32,7 +33,7 @@ namespace Interface
         private event EventHandler HeuristicStarted;
         private event EventHandler HeuristicEnded;
         private event EventHandler DataLoaded;
-        public Heuristics.HeuristicsBase Heuristic;
+        public HeuristicsBase Heuristic;
         
         public MainWindow()
         {
@@ -105,7 +106,7 @@ namespace Interface
             {
                 Cursor = Cursors.Wait;
 
-                Heuristics.ExportData.Export(dialog.FileName);
+                ExportData.Export(dialog.FileName);
 
                 Cursor = Cursors.Arrow;
             };

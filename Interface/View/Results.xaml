@@ -15,5 +15,7 @@
                 <local:Details x:Name="Details"/>
             </TabItem>
         </TabControl>
+        <Label x:Name="Time" Height="40" Width="500" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" 
+               Content="{Binding TempoExecucao, Mode=TwoWay}"/>
     </Grid>
 </UserControl>

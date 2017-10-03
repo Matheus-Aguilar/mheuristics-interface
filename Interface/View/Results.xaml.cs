@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,16 @@ namespace Interface.View
     /// <summary>
     /// Interaction logic for Results.xaml
     /// </summary>
-    public partial class Results : UserControl
+    public partial class Results : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public string TempoExecucao { get; set; }
+
         public Results()
         {
             InitializeComponent();
+
+            DataContext = this;
         }
     }
 }

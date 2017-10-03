@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Heuristics;
 
 namespace Interface.View
 {
@@ -23,8 +24,8 @@ namespace Interface.View
     public partial class HeuristicsView : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public Interface.MainWindow mainWindow;
-        public Heuristics.HeuristicsBase Heuristic;
+        public MainWindow mainWindow;
+        public HeuristicsBase Heuristic;
 
         public HeuristicsView()
         {
@@ -35,7 +36,7 @@ namespace Interface.View
         {
             step1.Visibility = Visibility.Hidden;
 
-            step2.Children.Add(new View.GeneticAlgorithm { mainWindow = mainWindow, Heuristics = Heuristic });
+            step2.Children.Add(new GeneticAlgorithmView { mainWindow = mainWindow, Heuristics = Heuristic });
 
             step2.Visibility = Visibility.Visible;
         }
@@ -44,7 +45,16 @@ namespace Interface.View
         {
             step1.Visibility = Visibility.Hidden;
 
-            step2.Children.Add(new View.SimulatedAnnealing { mainWindow = mainWindow, Heuristics = Heuristic });
+            step2.Children.Add(new SimulatedAnnealingView { mainWindow = mainWindow, Heuristics = Heuristic });
+
+            step2.Visibility = Visibility.Visible;
+        }
+
+        private void GRASP_Click(object sender, RoutedEventArgs e)
+        {
+            step1.Visibility = Visibility.Hidden;
+
+            step2.Children.Add(new GRASPView { mainWindow = mainWindow, Heuristics = Heuristic });
 
             step2.Visibility = Visibility.Visible;
         }
