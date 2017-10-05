@@ -30,8 +30,11 @@ namespace Interface.View
         public int numIteracoesGuloso { get; set; }
         public bool opt1 { get { return opt == 1; } set { opt = 1; } }
         public bool opt2 { get { return opt == 2; } set { opt = 2; } }
+        public bool cardinalidade { get { return tipo == 1; } set { tipo = 1; } }
+        public bool valor { get { return tipo == 2; } set { tipo = 2; } }
 
         private int opt;
+        private int tipo;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -43,6 +46,7 @@ namespace Interface.View
             numIteracoesLocal = 100;
             numIteracoesGuloso = 10;
             opt = 1;
+            tipo = 2;
 
             InitializeComponent();
         }
@@ -53,7 +57,7 @@ namespace Interface.View
 
             mainWindow.StartHeuristic();
 
-            mainWindow.Heuristic = new GRASP(alfaGrasp, numIteracoesLocal, numIteracoesGuloso - 1, opt);
+            mainWindow.Heuristic = new GRASP(alfaGrasp, numIteracoesLocal, numIteracoesGuloso - 1, opt, tipo);
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
 

@@ -15,13 +15,15 @@ namespace Heuristics
         int numIteracoesLocal;
         int numIteracoesGuloso;
         int opt;
+        int tipo;
 
-        public GRASP(double alfaGrasp = 0.05, int numIteracoesLocal = 100, int numIteracoesGuloso = 0, int opt = 1)
+        public GRASP(double alfaGrasp = 0.05, int numIteracoesLocal = 100, int numIteracoesGuloso = 0, int opt = 1, int tipo = 1)
         {
             this.alfaGrasp = alfaGrasp;
             this.numIteracoesLocal = numIteracoesLocal;
             this.numIteracoesGuloso = numIteracoesGuloso;
             this.opt = opt;
+            this.tipo = tipo;
         }
 
         int selecionaPresc(ref int[] solucao, int pos)
@@ -117,10 +119,24 @@ namespace Heuristics
 
                     rcl.Add(new Tuple<int, double>(j, fo));
                 }
+                
+                if (tipo == 1)
+                {
+                    rcl = rcl.OrderBy(p => -p.Item2).ToList();
 
-                rcl = rcl.OrderBy(p => -p.Item2).ToList();
+                    sol[i] = rcl[rand.Next(Convert.ToInt32(alfaGrasp * rcl.Count)) + 1].Item1;
+                }
+                else
+                {
+                    var cMin = rcl.Min(p => p.Item2);
+                    var cMax = rcl.Max(p => p.Item2);
 
-                sol[i] = rcl[rand.Next(Convert.ToInt32(alfaGrasp * rcl.Count)) + 1].Item1;
+                    var limite = cMax - alfaGrasp * Math.Abs(cMax - cMin);
+
+                    rcl = rcl.Where(p => p.Item2 > limite).ToList();
+
+                    sol[i] = rcl[rand.Next(rcl.Count)].Item1;
+                }
             }
 
             return sol;

@@ -12,7 +12,8 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="1.3*"/>
+                <RowDefinition Height="1.3*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -26,9 +27,13 @@
             <Controls:NumericUpDown Value="{Binding numIteracoesLocal, Mode=TwoWay}" Grid.Column="1" Height="23" VerticalAlignment="Center" Width="120" Grid.Row="1"/>
             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Iterações da fase construtiva" VerticalAlignment="Center" Grid.Row="2"/>
             <Controls:NumericUpDown Value="{Binding numIteracoesGuloso, Mode=TwoWay}"  Grid.Column="1" Height="23" VerticalAlignment="Center" Width="120" Grid.Row="2"/>
-            <RadioButton Grid.Column="0" Grid.Row="3" IsChecked="{Binding opt1, Mode=TwoWay}" HorizontalAlignment="Center">1-Opt</RadioButton>
-            <RadioButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding opt2, Mode=TwoWay}" HorizontalAlignment="Center">2-Opt</RadioButton>
-            <Button Grid.ColumnSpan="2" Content="Iniciar heuristica" HorizontalAlignment="Center" Margin="0" Grid.Row="4" 
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Vizinhança" VerticalAlignment="Center" Grid.Row="3"/>
+            <RadioButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding opt1, Mode=TwoWay}" HorizontalAlignment="Left" VerticalContentAlignment="Top" VerticalAlignment="Top" Margin="30,10,0,0">1-Opt</RadioButton>
+            <RadioButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding opt2, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,10">2-Opt</RadioButton>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Método de escolha" VerticalAlignment="Center" Grid.Row="4"/>
+            <RadioButton Grid.Column="1" Grid.Row="4" IsChecked="{Binding cardinalidade, Mode=TwoWay}" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Margin="30,10,0,0">Cardinalidade</RadioButton>
+            <RadioButton Grid.Column="1" Grid.Row="4" IsChecked="{Binding valor, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,10">Valor</RadioButton>
+            <Button Grid.ColumnSpan="2" Content="Iniciar heuristica" HorizontalAlignment="Center" Margin="0" Grid.Row="5" 
                         VerticalAlignment="Center" Width="137" Click="Button_Click"/>
         </Grid>
     </Grid>
