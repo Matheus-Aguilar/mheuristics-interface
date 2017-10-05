@@ -103,48 +103,9 @@ namespace Heuristics
             return false;
         }
 
-        int[] geraSolucaoInicial()
-        {
-            int[] sol = new int[n];
-
-            for (int i = 0; i < n; i++)
-            {
-                var rcl = new List<Tuple<int, double>>();
-
-                for (int j = 0; j < nAf; j++)
-                {
-                    sol[i] = j;
-
-                    var fo = avaliar(sol, i + 1).Item1;
-
-                    rcl.Add(new Tuple<int, double>(j, fo));
-                }
-                
-                if (tipo == 1)
-                {
-                    rcl = rcl.OrderBy(p => -p.Item2).ToList();
-
-                    sol[i] = rcl[rand.Next(Convert.ToInt32(alfaGrasp * rcl.Count)) + 1].Item1;
-                }
-                else
-                {
-                    var cMin = rcl.Min(p => p.Item2);
-                    var cMax = rcl.Max(p => p.Item2);
-
-                    var limite = cMax - alfaGrasp * Math.Abs(cMax - cMin);
-
-                    rcl = rcl.Where(p => p.Item2 > limite).ToList();
-
-                    sol[i] = rcl[rand.Next(rcl.Count)].Item1;
-                }
-            }
-
-            return sol;
-        }
-
         public override void Run()
         {
-            solucao = geraSolucaoInicial();
+            solucao = geraSolucaoGulosa(tipo, alfaGrasp);
 
             for (var i = 0; i < numIteracoesLocal; i++)
                 while (pertuba(ref solucao)) ;
@@ -153,7 +114,7 @@ namespace Heuristics
 
             for (var i = 0; i < numIteracoesGuloso; i++)
             {
-                var novaSolucao = geraSolucaoInicial();
+                var novaSolucao = geraSolucaoGulosa(tipo, alfaGrasp);
 
                 for (var j = 0; j < numIteracoesLocal; j++)
                     while (pertuba(ref novaSolucao)) ;

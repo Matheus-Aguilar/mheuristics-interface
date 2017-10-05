@@ -56,9 +56,21 @@ namespace Interface.View
             double[] valores = new double[HeuristicsBase.h];
 
             for (int i = 0; i < HeuristicsBase.n; i++)
+            {
+                int vezesCortado = 0;
+
                 for (int k = 0; k < HeuristicsBase.h; k++)
                     if (HeuristicsBase.mCorte[i, solucao[i], k])
-                        valores[k] += HeuristicsBase.mVPL[i, solucao[i]];
+                        vezesCortado++;
+
+                if(vezesCortado > 0)
+                    for (int k = 0; k < HeuristicsBase.h; k++)
+                        if (HeuristicsBase.mCorte[i, solucao[i], k])
+                            valores[k] += HeuristicsBase.mVPL[i, solucao[i]] / vezesCortado;
+            }
+
+            for (int i = 1; i < HeuristicsBase.h; i++)
+                valores[i] += valores[i - 1];
 
             for (var i = 0; i < HeuristicsBase.h; i++)
                 serieVPL.Points.Add(new OxyPlot.DataPoint(i + 1, valores[i]));
@@ -80,7 +92,7 @@ namespace Interface.View
                 Minimum = 0,
                 Maximum = HeuristicsBase.h + 1
             });
-            
+
             double[] valores = new double[HeuristicsBase.h];
 
             if (HeuristicsBase.areaAdjacencia)

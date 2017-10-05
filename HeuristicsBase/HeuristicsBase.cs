@@ -289,6 +289,51 @@ namespace Heuristics
             return solucao;
         }
 
+        /// <summary>
+        /// Gera solução gulosa, por tipo (1: cardinalidade, 2: valor) e com aleatoriedade(0 -> menos aleatório)
+        /// </summary>
+        /// <param name="tipo">1: cardinalidade, 2: valor</param>
+        /// <param name="alfa">Aleatoriedade</param>
+        /// <returns></returns>
+        public int[] geraSolucaoGulosa(int tipo, double alfa)
+        {
+            int[] sol = new int[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                var rcl = new List<Tuple<int, double>>();
+
+                for (int j = 0; j < nAf; j++)
+                {
+                    sol[i] = j;
+
+                    var fo = avaliar(sol, i + 1).Item1;
+
+                    rcl.Add(new Tuple<int, double>(j, fo));
+                }
+
+                if (tipo == 1)
+                {
+                    rcl = rcl.OrderBy(p => -p.Item2).ToList();
+
+                    sol[i] = rcl[rand.Next(Convert.ToInt32(alfa * rcl.Count)) + 1].Item1;
+                }
+                else
+                {
+                    var cMin = rcl.Min(p => p.Item2);
+                    var cMax = rcl.Max(p => p.Item2);
+
+                    var limite = cMax - alfa * Math.Abs(cMax - cMin);
+
+                    rcl = rcl.Where(p => p.Item2 > limite).ToList();
+
+                    sol[i] = rcl[rand.Next(rcl.Count)].Item1;
+                }
+            }
+
+            return sol;
+        }
+
         public virtual void Run()
         {
 
