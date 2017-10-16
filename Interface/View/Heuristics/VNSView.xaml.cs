@@ -20,31 +20,22 @@ namespace Interface.View
     /// <summary>
     /// Interaction logic for GeneticAlgorithm.xaml
     /// </summary>
-    public partial class SimulatedAnnealingView : UserControl, INotifyPropertyChanged
+    public partial class VNSView : UserControl, INotifyPropertyChanged
     {
         public HeuristicsBase Heuristics;
         public MainWindow mainWindow;
 
-        public double t { get; set; }
-        public double tf { get; set; }
-        public double taxaResf { get; set; }
         public int contIteracao { get; set; }
-        public bool opt1 { get { return opt == 1; } set { opt = 1; } }
-        public bool opt2 { get { return opt == 2; } set { opt = 2; } }
 
         private int opt;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SimulatedAnnealingView()
+        public VNSView()
         {
             DataContext = this;
 
-            t = 100000;
-            tf = 1000;
-            taxaResf = 0.95;
             contIteracao = 100;
-            opt = 2;
 
             InitializeComponent();
         }
@@ -55,8 +46,8 @@ namespace Interface.View
 
             mainWindow.StartHeuristic();
 
-            mainWindow.Heuristic = new SimulatedAnnealing(t, tf, taxaResf, contIteracao, opt);
-            
+            mainWindow.Heuristic = new VNS(contIteracao);
+
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
             bkw.DoWork += (_, __) =>

@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="ExportData.cs" />
     <Compile Include="GeneticAlgorithm.cs" />
+    <Compile Include="VNS.cs" />
     <Compile Include="GRASP.cs" />
     <Compile Include="HeuristicsBase.cs" />
     <Compile Include="LoadData.cs" />

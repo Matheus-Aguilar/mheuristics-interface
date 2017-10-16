@@ -58,5 +58,23 @@ namespace Interface.View
 
             step2.Visibility = Visibility.Visible;
         }
+
+        private void VNS_Click(object sender, RoutedEventArgs e)
+        {
+            step1.Visibility = Visibility.Hidden;
+
+            step2.Children.Add(new VNSView { mainWindow = mainWindow, Heuristics = Heuristic });
+
+            step2.Visibility = Visibility.Visible;
+        }
+
+        public void Reset()
+        {
+            step2.Children.Clear();
+
+            step2.Visibility = Visibility.Hidden;
+
+            step1.Visibility = Visibility.Visible;
+        }
     }
 }

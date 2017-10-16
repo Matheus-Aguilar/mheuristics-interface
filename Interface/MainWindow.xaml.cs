@@ -113,5 +113,12 @@ namespace Interface
 
             dialog.ShowDialog();
         }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            step3.Visibility = Visibility.Hidden;
+            HeuristicsView.Reset();
+            step1.Visibility = Visibility.Visible;
+        }
     }
 }
