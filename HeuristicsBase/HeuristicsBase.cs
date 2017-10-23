@@ -81,6 +81,12 @@ namespace Heuristics
 
         [JsonProperty]
         /// <summary>
+        /// coeficiente da restrição de adjacencia
+        /// </summary>
+        public static int greenUp = 1;
+
+        [JsonProperty]
+        /// <summary>
         /// vetor de talhões
         /// </summary>
         public static Talhao[] talhoes;
@@ -201,13 +207,14 @@ namespace Heuristics
                     for (int i = 0; i < n; i++)
                         for (int k = 0; k < h; k++)
                             if (mCorte[i, solucao[i], k])
-                                foreach (int vizinho in talhoes[i].vizinhos)
-                                    if (mCorte[vizinho, solucao[vizinho], k])
-                                    {
-                                        areaQuebra += talhoes[i].area;
+                                for(int j = 0; j < greenUp; j++)
+                                    foreach (int vizinho in talhoes[i].vizinhos)
+                                        if (mCorte[vizinho, solucao[vizinho], (k + j) % h])
+                                        {
+                                            areaQuebra += talhoes[i].area;
 
-                                        break;
-                                    }
+                                            break;
+                                        }
 
                     return areaQuebra;
                 }

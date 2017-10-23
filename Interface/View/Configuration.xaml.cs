@@ -32,6 +32,7 @@ namespace Interface.View
         public double alfaRegArea { get; set; }
         public bool isOpen { get; set; }
         public int restricaoAdj { get; set; }
+        public int greenUp { get; set; }
 
         public Configuration()
         {
@@ -50,6 +51,7 @@ namespace Interface.View
             beta = HeuristicsBase.beta;
             gama = HeuristicsBase.gama;
             alfaRegArea = HeuristicsBase.alfaRegArea;
+            greenUp = HeuristicsBase.greenUp;
 
             restricaoAdj = HeuristicsBase.areaAdjacencia ? 1 : 0;
         }
@@ -65,6 +67,7 @@ namespace Interface.View
             HeuristicsBase.areaPorR_menosAlfaReg = HeuristicsBase.areaPorR * (1 - alfaRegArea);
             HeuristicsBase.areaPorR_maisAlfaReg = HeuristicsBase.areaPorR * (1 + alfaRegArea);
             HeuristicsBase.areaAdjacencia = restricaoAdj == 1;
+            HeuristicsBase.greenUp = greenUp;
 
             isOpen = false;
         }
