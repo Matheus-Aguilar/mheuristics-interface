@@ -178,12 +178,12 @@ namespace Interface.View
         {
             var plotVolumeCortado = new OxyPlot.PlotModel();
 
-            plotVolumeCortado.Axes.Add(new LinearAxis
+            plotVolumeCortado.Axes.Add(new CategoryAxis
             {
                 Key = "xAxis",
                 Position = AxisPosition.Bottom,
                 Title = "Ano",
-                Minimum = 0,
+                Minimum = -1,
                 Maximum = HeuristicsBase.h + 1
             });
 
@@ -192,20 +192,21 @@ namespace Interface.View
                 Key = "yAxis",
                 Position = AxisPosition.Left,
                 Title = "Volume (m³/ha)",
-                MinimumPadding = 0.1,
+                Minimum = 0,
                 MaximumPadding = 0.1
             });
 
-            var serieVolumeCortado = new OxyPlot.Series.LineSeries { Title = "Volume cortado", StrokeThickness = 2, CanTrackerInterpolatePoints = false };
+            var serieVolumeCortado = new OxyPlot.Series.ColumnSeries { Title = "Volume cortado", StrokeThickness = 2 };
             var serieMinVolumeCortado = new OxyPlot.Series.LineSeries { Selectable = false, Title = "Mínimo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
             var serieMaxVolumeCortado = new OxyPlot.Series.LineSeries { Title = "Máximo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
 
+            serieMinVolumeCortado.Points.Add(new OxyPlot.DataPoint(-1000, HeuristicsBase.volMin));
+            serieMaxVolumeCortado.Points.Add(new OxyPlot.DataPoint(-1000, HeuristicsBase.volMax));
+            serieMinVolumeCortado.Points.Add(new OxyPlot.DataPoint(1000, HeuristicsBase.volMin));
+            serieMaxVolumeCortado.Points.Add(new OxyPlot.DataPoint(1000, HeuristicsBase.volMax));
+
             for (var i = 0; i < HeuristicsBase.h; i++)
-            {
-                serieMinVolumeCortado.Points.Add(new OxyPlot.DataPoint(i + 1, HeuristicsBase.volMin));
-                serieMaxVolumeCortado.Points.Add(new OxyPlot.DataPoint(i + 1, HeuristicsBase.volMax));
-                serieVolumeCortado.Points.Add(new OxyPlot.DataPoint(i + 1, solucao.Select((p, idx) => HeuristicsBase.mVolume[idx, p, i]).Sum()));
-            }
+                serieVolumeCortado.Items.Add(new OxyPlot.Series.ColumnItem(solucao.Select((p, idx) => HeuristicsBase.mVolume[idx, p, i]).Sum()));
 
             plotVolumeCortado.Series.Add(serieVolumeCortado);
             plotVolumeCortado.Series.Add(serieMinVolumeCortado);
@@ -218,12 +219,12 @@ namespace Interface.View
         {
             var plotFlorestaRegulada = new OxyPlot.PlotModel();
 
-            plotFlorestaRegulada.Axes.Add(new LinearAxis
+            plotFlorestaRegulada.Axes.Add(new CategoryAxis
             {
                 Key = "xAxis",
                 Position = AxisPosition.Bottom,
                 Title = "Ano",
-                Minimum = 0,
+                Minimum = -1,
                 Maximum = HeuristicsBase.r + 1
             });
 
@@ -232,20 +233,21 @@ namespace Interface.View
                 Key = "yAxis",
                 Position = AxisPosition.Left,
                 Title = "Area (ha)",
-                MinimumPadding = 0.1,
+                Minimum = 0,
                 MaximumPadding = 0.1
             });
 
-            var serieFlorestaRegulada = new OxyPlot.Series.LineSeries { Title = "Area de corte", StrokeThickness = 2, CanTrackerInterpolatePoints = false };
+            var serieFlorestaRegulada = new OxyPlot.Series.ColumnSeries { Title = "Area de corte", StrokeThickness = 2 };
             var serieMinFlorestaRegulada = new OxyPlot.Series.LineSeries { Title = "Mínimo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
             var serieMaxFlorestaRegulada = new OxyPlot.Series.LineSeries { Title = "Máximo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
 
+            serieMinFlorestaRegulada.Points.Add(new OxyPlot.DataPoint(-1000, HeuristicsBase.areaPorR_menosAlfaReg));
+            serieMaxFlorestaRegulada.Points.Add(new OxyPlot.DataPoint(-1000, HeuristicsBase.areaPorR_maisAlfaReg));
+            serieMinFlorestaRegulada.Points.Add(new OxyPlot.DataPoint(1000, HeuristicsBase.areaPorR_menosAlfaReg));
+            serieMaxFlorestaRegulada.Points.Add(new OxyPlot.DataPoint(1000, HeuristicsBase.areaPorR_maisAlfaReg));
+
             for (var i = 0; i < HeuristicsBase.r; i++)
-            {
-                serieMinFlorestaRegulada.Points.Add(new OxyPlot.DataPoint(i + 1, HeuristicsBase.areaPorR_menosAlfaReg));
-                serieMaxFlorestaRegulada.Points.Add(new OxyPlot.DataPoint(i + 1, HeuristicsBase.areaPorR_maisAlfaReg));
-                serieFlorestaRegulada.Points.Add(new OxyPlot.DataPoint(i + 1, solucao.Select((p, idx) => HeuristicsBase.mRegArea[idx, p, i]).Sum()));
-            }
+                serieFlorestaRegulada.Items.Add(new OxyPlot.Series.ColumnItem(solucao.Select((p, idx) => HeuristicsBase.mRegArea[idx, p, i]).Sum()));
 
             plotFlorestaRegulada.Series.Add(serieFlorestaRegulada);
             plotFlorestaRegulada.Series.Add(serieMinFlorestaRegulada);

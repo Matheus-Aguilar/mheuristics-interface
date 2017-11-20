@@ -18,7 +18,7 @@
         <Controls:WindowCommands>
             <Button x:Name="ExportJSON" Content="Exportar instância" Visibility="{Binding ElementName=step1, Path=Visibility}" Click="ExportJSON_Click"/>
             <Button x:Name="OpenConfigurations" Content="Configurações" Visibility="{Binding ElementName=step1, Path=Visibility}" Click="OpenConfigurations_Click" />
-            <Button x:Name="Back" Content="Voltar" Visibility="{Binding ElementName=step3, Path=Visibility}" Click="Back_Click" />
+            <Button x:Name="Back" Content="Voltar" Click="Back_Click" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Grid>

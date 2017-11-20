@@ -83,7 +83,7 @@ namespace Interface
         {
             Results.Overall.SetData(Heuristic.Iteracoes);
             Results.Details.SetData(Heuristic.solucao);
-
+            
             WindowState = WindowState.Maximized;
 
             step2.Visibility = Visibility.Hidden;
@@ -116,6 +116,9 @@ namespace Interface
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            if (step0.Visibility == Visibility.Visible || step2.Visibility == Visibility.Visible)
+                return;
+
             step3.Visibility = Visibility.Hidden;
             HeuristicsView.Reset();
             step1.Visibility = Visibility.Visible;
