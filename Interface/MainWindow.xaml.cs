@@ -123,5 +123,10 @@ namespace Interface
             HeuristicsView.Reset();
             step1.Visibility = Visibility.Visible;
         }
+
+        private void LoadData_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

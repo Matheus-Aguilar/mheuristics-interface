@@ -20,6 +20,8 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -32,23 +34,27 @@
         <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="2" Grid.Column="2" StringFormat="F2" VerticalAlignment="Center" Width="Auto" Value="{Binding volumeMaximo, Mode=TwoWay}" Interval="10000"/>
         <Label Content="% variação área" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3"/>
         <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="3" Grid.Column="2" StringFormat="F5" VerticalAlignment="Center" Width="Auto" Value="{Binding alfaRegArea, Mode=TwoWay}" Interval="0.01"/>
-        <Label Content="Restrição de adjacência" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"/>
-        <ComboBox Grid.Column="1" Grid.Row="4" Height="24" SelectedIndex="{Binding restricaoAdj}">
+        <Label Content="% variação volume +" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="4" Grid.Column="2" StringFormat="F5" VerticalAlignment="Center" Width="Auto" Value="{Binding alfaRegVol, Mode=TwoWay}" Interval="0.01"/>
+        <Label Content="% variação volume -" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="5" Grid.Column="2" StringFormat="F5" VerticalAlignment="Center" Width="Auto" Value="{Binding betaRegVol, Mode=TwoWay}" Interval="0.01"/>
+        <Label Content="Restrição de adjacência" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6"/>
+        <ComboBox Grid.Column="1" Grid.Row="6" Height="24" SelectedIndex="{Binding restricaoAdj}">
             <ComboBoxItem Tag="1">IAC</ComboBoxItem>
             <ComboBoxItem Tag="2">Área de adjacência</ComboBoxItem>
         </ComboBox>
-        <Label Content="Green up" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Width="Auto" Value="{Binding greenUp, Mode=TwoWay}" Interval="1" Maximum="10" Minimum="0"/>
-        <Label Content="Parâmetros da função de avaliação" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" FontWeight="Bold"/>
-        <Label Content="Alfa" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="7"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="7" Grid.Column="2" StringFormat="F6" VerticalAlignment="Center" Width="Auto" Value="{Binding alfa, Mode=TwoWay}" Interval="1E-06"/>
-        <Label Content="Beta" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="8"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="8" Grid.Column="2" StringFormat="F6" VerticalAlignment="Center" Width="Auto" Value="{Binding beta, Mode=TwoWay}" Interval="0.0001"/>
-        <Label Content="Gama" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="9"/>
-        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="9" Grid.Column="2" StringFormat="F6" VerticalAlignment="Center" Width="Auto" Value="{Binding gama, Mode=TwoWay}" Interval="0.01"/>
+        <Label Content="Green up" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="7"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="7" Grid.Column="2" VerticalAlignment="Center" Width="Auto" Value="{Binding greenUp, Mode=TwoWay}" Interval="1" Maximum="10" Minimum="0"/>
+        <Label Content="Parâmetros da função de avaliação" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="8" Grid.ColumnSpan="2" FontWeight="Bold"/>
+        <Label Content="Alfa" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="9"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="9" Grid.Column="2" StringFormat="F6" VerticalAlignment="Center" Width="Auto" Value="{Binding alfa, Mode=TwoWay}" Interval="1E-06"/>
+        <Label Content="Beta" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="10"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="10" Grid.Column="2" StringFormat="F6" VerticalAlignment="Center" Width="Auto" Value="{Binding beta, Mode=TwoWay}" Interval="0.0001"/>
+        <Label Content="Gama" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="11"/>
+        <Controls:NumericUpDown HorizontalAlignment="Stretch" Height="24" Grid.Row="11" Grid.Column="2" StringFormat="F6" VerticalAlignment="Center" Width="Auto" Value="{Binding gama, Mode=TwoWay}" Interval="0.01"/>
         
 
-        <Button Grid.ColumnSpan="2" Content="Salvar" HorizontalAlignment="Center" Margin="0" Grid.Row="10" 
+        <Button Grid.ColumnSpan="2" Content="Salvar" HorizontalAlignment="Center" Margin="0" Grid.Row="12" 
                     VerticalAlignment="Bottom" Click="Button_Click" Width="100" VerticalContentAlignment="Center"/>
     </Grid>
 </UserControl>

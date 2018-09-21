@@ -8,7 +8,7 @@ namespace Heuristics
 {
     public class HeuristicsBase
     {
-        public List<Tuple<double, double, double, double, double>> Iteracoes = new List<Tuple<double, double, double, double, double>>();
+        public List<Tuple<double, double, double, double, double, double>> Iteracoes = new List<Tuple<double, double, double, double, double, double>>();
         public int[] solucao;
 
         #region var_declare
@@ -60,7 +60,27 @@ namespace Heuristics
         public static double alfaRegArea = 0.20;
         [JsonProperty]
         /// <summary>
-        /// área total da fazenda em hectaes
+        /// variação permitida do volume por ano, para cima
+        /// </summary>
+        public static double alfaRegVol = 0.20;
+        [JsonProperty]
+        /// <summary>
+        /// variação permtida do volume por ano, para baixo
+        /// </summary>
+        public static double betaRegVol = 0.20;
+        [JsonProperty]
+        /// <summary>
+        /// volume médio dos talhões
+        /// </summary>
+        public static double volumeMedio = 2559.789;
+        [JsonProperty]
+        /// <summary>
+        /// penalidade de volume do ano 0, calculada com base no volume médio
+        /// </summary>
+        public static double penalidadeInicial = 0;
+        [JsonProperty]
+        /// <summary>
+        /// área total da fazenda, em hectares
         /// </summary>
         public static double areaTotal = 1892.08;
         [JsonProperty]
@@ -154,7 +174,7 @@ namespace Heuristics
         /// <param name="solucao">Vetor contendo a prescrição para cada talhão</param>
         /// <returns>
         /// </returns>
-        public Tuple<double, double, double, double, double> avaliar(int[] solucao, int n = 0)
+        public Tuple<double, double, double, double, double, double> avaliar(int[] solucao, int n = 0)
         {
             if (n == 0)
                 n = HeuristicsBase.n;
@@ -190,6 +210,37 @@ namespace Heuristics
                         restricaoVolume += (volMin - volume);
                     else if (volume > volMax)
                         restricaoVolume += (volume - volMax);
+                }
+
+                double volumeAnterior = 0;
+                
+                //Calculando o volume do ano zero
+                for (int i = 0; i < n; i++)
+                    if (mCorte[i, solucao[i], 0])
+                        volumeAnterior += mVolume[i, solucao[i], 0];
+
+                //Calculando a penalidade do primeiro ano, com base na média dos volumes
+                if (volumeAnterior <= (1 - alfaRegVol) * volumeMedio)
+                    restricaoVolume += (((1 - alfaRegVol) * volumeMedio) - volumeAnterior);
+                else if (volumeAnterior >= (1 + betaRegVol) * volumeMedio)
+                    restricaoVolume += (volumeAnterior - ((1 + betaRegVol) * volumeMedio));
+
+                HeuristicsBase.penalidadeInicial = restricaoVolume;
+
+                for (int k=1; k < h-1; k++)
+                {
+                    double volume = 0;
+
+                    for (int i=0; i < n; i++)
+                        if (mCorte[i, solucao[i], k])
+                            volume += mVolume[i, solucao[i], k];
+
+                    if (volume <= (1 - alfaRegVol) * volumeAnterior)
+                        restricaoVolume += (((1 - alfaRegVol) * volumeAnterior) - volume);
+                    else if(volume >= (1 + betaRegVol) * volumeAnterior)
+                        restricaoVolume += (volume-((1 + betaRegVol) * volumeAnterior));
+
+                    volumeAnterior = volume;
                 }
 
                 return restricaoVolume;
@@ -278,11 +329,11 @@ namespace Heuristics
 
             double funcaoAvalicao = funcoes[0].Result
                 - funcoes[1].Result * funcoes[1].Result * alfa
-                - funcoes[0].Result * funcoes[2].Result * beta
+                - funcoes[2].Result * funcoes[2].Result * beta
                 - funcoes[3].Result * funcoes[3].Result * gama;
 
-            return Tuple.Create<double, double, double, double, double>
-                (funcaoAvalicao, funcoes[0].Result, funcoes[1].Result, funcoes[2].Result, funcoes[3].Result);
+            return Tuple.Create<double, double, double, double, double, double>
+                (funcaoAvalicao, funcoes[0].Result, funcoes[1].Result, funcoes[2].Result, funcoes[3].Result, HeuristicsBase.penalidadeInicial);
         }
 
         public int[] geraSolucaoAleatoria()

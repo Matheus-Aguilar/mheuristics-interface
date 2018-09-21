@@ -178,25 +178,25 @@ namespace Interface.View
         {
             var plotVolumeCortado = new OxyPlot.PlotModel();
 
-            plotVolumeCortado.Axes.Add(new CategoryAxis
+            var xAxis = new CategoryAxis
             {
                 Key = "xAxis",
                 Position = AxisPosition.Bottom,
                 Title = "Ano",
                 Minimum = -1,
-                Maximum = HeuristicsBase.h + 1
-            });
+                Maximum = HeuristicsBase.h+1
+            };
 
             plotVolumeCortado.Axes.Add(new LinearAxis
             {
                 Key = "yAxis",
                 Position = AxisPosition.Left,
-                Title = "Volume (m³/ha)",
+                Title = "Volume (m³)",
                 Minimum = 0,
                 MaximumPadding = 0.1
             });
 
-            var serieVolumeCortado = new OxyPlot.Series.ColumnSeries { Title = "Volume cortado", StrokeThickness = 2 };
+            var serieVolumeCortado = new OxyPlot.Series.ColumnSeries { Title = "Volume cortado", StrokeThickness = 2};
             var serieMinVolumeCortado = new OxyPlot.Series.LineSeries { Selectable = false, Title = "Mínimo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
             var serieMaxVolumeCortado = new OxyPlot.Series.LineSeries { Title = "Máximo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
 
@@ -205,8 +205,19 @@ namespace Interface.View
             serieMinVolumeCortado.Points.Add(new OxyPlot.DataPoint(1000, HeuristicsBase.volMin));
             serieMaxVolumeCortado.Points.Add(new OxyPlot.DataPoint(1000, HeuristicsBase.volMax));
 
+            //Adicionando o volume médio ao gráfico
+            xAxis.ActualLabels.Add("Md");
+            serieVolumeCortado.Items.Add(new OxyPlot.Series.ColumnItem(HeuristicsBase.volumeMedio));
+            serieVolumeCortado.Items[0].Color = OxyPlot.OxyColor.FromRgb(80, 200, 255);
+
             for (var i = 0; i < HeuristicsBase.h; i++)
+            {
+                //Adicionando o número do ano no eixo X do gráfico
+                xAxis.ActualLabels.Add(i.ToString());
                 serieVolumeCortado.Items.Add(new OxyPlot.Series.ColumnItem(solucao.Select((p, idx) => HeuristicsBase.mVolume[idx, p, i]).Sum()));
+            }
+
+            plotVolumeCortado.Axes.Add(xAxis);
 
             plotVolumeCortado.Series.Add(serieVolumeCortado);
             plotVolumeCortado.Series.Add(serieMinVolumeCortado);

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Heuristics;
 
 namespace Interface.View
 {
@@ -26,7 +27,7 @@ namespace Interface.View
             InitializeComponent();
         }
 
-        public void SetData(List<Tuple<double, double, double, double, double>> data)
+        public void SetData(List<Tuple<double, double, double, double, double, double>> data)
         {
             var plotFO = new OxyPlot.PlotModel();
             var plotRR = new OxyPlot.PlotModel();
@@ -101,7 +102,7 @@ namespace Interface.View
                 serieFO.Points.Add(new OxyPlot.DataPoint(count, tupla.Item2));
                 serieRR.Points.Add(new OxyPlot.DataPoint(count, tupla.Item5));
                 serieRA.Points.Add(new OxyPlot.DataPoint(count, tupla.Item4));
-                serieRV.Points.Add(new OxyPlot.DataPoint(count, tupla.Item3));
+                serieRV.Points.Add(new OxyPlot.DataPoint(count, tupla.Item3 - tupla.Item6));
 
                 count++;
             }
