@@ -26,23 +26,23 @@ namespace Interface.View
             FlorestaRegulada(solucao);
             VolumeCortado(solucao);
             Adjacencia(solucao);
-            VPL(solucao);
+            Custos(solucao);
         }
 
-        private void VPL(int[] solucao)
+        private void Custos(int[] solucao)
         {
-            var plotVPL = new OxyPlot.PlotModel();
+            var plotCustos = new OxyPlot.PlotModel();
 
-            plotVPL.Axes.Add(new LinearAxis
+            var xAxis = new CategoryAxis
             {
                 Key = "xAxis",
                 Position = AxisPosition.Bottom,
-                Title = "Ano",
-                Minimum = 0,
-                Maximum = HeuristicsBase.h + 1
-            });
+                Title = "Tipo de Custo",
+                Minimum = -1,
+                Maximum = 8
+            };
 
-            plotVPL.Axes.Add(new LinearAxis
+            plotCustos.Axes.Add(new LinearAxis
             {
                 Key = "yAxis",
                 Position = AxisPosition.Left,
@@ -51,33 +51,52 @@ namespace Interface.View
                 MaximumPadding = 0.1
             });
 
-            var serieVPL = new OxyPlot.Series.LineSeries { Title = "VPL", StrokeThickness = 2, CanTrackerInterpolatePoints = false };
+            var serieCustos = new OxyPlot.Series.ColumnSeries { Title = "Custos Totais", StrokeThickness = 2};
+            serieCustos.LabelPlacement = OxyPlot.Series.LabelPlacement.Outside;
+            serieCustos.LabelFormatString = "{0:.00}";
 
-            double[] valores = new double[HeuristicsBase.h];
 
-            for (int i = 0; i < HeuristicsBase.n; i++)
+            double colheitaTotal = 0;
+            double baldeioTotal = 0;
+            double transporteTotal = 0;
+            double silviculturaTotal = 0;
+            double implantacaoTotal = 0;
+            double anterioresTotal = 0;
+            double VPLTotal = 0; 
+
+            for(int i = 0; i < HeuristicsBase.n; i++)
             {
-                int vezesCortado = 0;
-
-                for (int k = 0; k < HeuristicsBase.h; k++)
-                    if (HeuristicsBase.mCorte[i, solucao[i], k])
-                        vezesCortado++;
-
-                if(vezesCortado > 0)
-                    for (int k = 0; k < HeuristicsBase.h; k++)
-                        if (HeuristicsBase.mCorte[i, solucao[i], k])
-                            valores[k] += HeuristicsBase.mVPL[i, solucao[i]] / vezesCortado;
+                colheitaTotal += HeuristicsBase.mColheita[i, solucao[i]];
+                baldeioTotal += HeuristicsBase.mBaldeio[i, solucao[i]];
+                transporteTotal += HeuristicsBase.mTransporte[i, solucao[i]];
+                silviculturaTotal += HeuristicsBase.mSilvicultura[i, solucao[i]];
+                implantacaoTotal += HeuristicsBase.mImplantacao[i, solucao[i]];
+                anterioresTotal += HeuristicsBase.mAnteriores[i, solucao[i]];
+                VPLTotal += HeuristicsBase.mVPL[i, solucao[i]];
             }
 
-            for (int i = 1; i < HeuristicsBase.h; i++)
-                valores[i] += valores[i - 1];
 
-            for (var i = 0; i < HeuristicsBase.h; i++)
-                serieVPL.Points.Add(new OxyPlot.DataPoint(i + 1, valores[i]));
+            xAxis.ActualLabels.Add("Colheita\n(R$/10)");
+            serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(colheitaTotal/10));
+            xAxis.ActualLabels.Add("Baldeio");
+            serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(baldeioTotal));
+            xAxis.ActualLabels.Add("Transporte");
+            serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(transporteTotal));
+            xAxis.ActualLabels.Add("Silvicultura");
+            serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(silviculturaTotal));
+            xAxis.ActualLabels.Add("Implantação");
+            serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(implantacaoTotal));
+            xAxis.ActualLabels.Add("   Custos\nAnteriores");
+            serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(anterioresTotal));
+            xAxis.ActualLabels.Add("VPL");
+            serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(VPLTotal));
+            serieCustos.Items[6].Color = OxyPlot.OxyColor.FromRgb(80, 200, 255);
+            
+            plotCustos.Axes.Add(xAxis);
 
-            plotVPL.Series.Add(serieVPL);
+            plotCustos.Series.Add(serieCustos);
 
-            plot_interface_4.Model = plotVPL;
+            plot_interface_4.Model = plotCustos;
         }
 
         private void Adjacencia(int[] solucao)

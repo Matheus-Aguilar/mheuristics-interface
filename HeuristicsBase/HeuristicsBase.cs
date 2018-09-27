@@ -115,6 +115,30 @@ namespace Heuristics
         /// matriz de VPLs
         /// </summary>
         public static double[,] mVPL;
+        /// <summary>
+        /// matriz de custos de colheita
+        /// </summary>
+        public static double[,] mColheita;
+        /// <summary>
+        /// matriz de custos de baldeio
+        /// </summary>
+        public static double[,] mBaldeio;
+        /// <summary>
+        /// matriz de custos de transporte
+        /// </summary>
+        public static double[,] mTransporte;
+        /// <summary>
+        /// matriz de custos de silvicultura
+        /// </summary>
+        public static double[,] mSilvicultura;
+        /// <summary>
+        /// matriz de custos de implantação
+        /// </summary>
+        public static double[,] mImplantacao;
+        /// <summary>
+        /// matriz de custos anteriores
+        /// </summary>
+        public static double[,] mAnteriores;
         [JsonProperty]
         /// <summary>
         /// matriz que indica se o talhão i sobre a prescrição j será cortado no ano k

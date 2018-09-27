@@ -36,6 +36,12 @@ namespace Heuristics
 
             talhoes = new Talhao[n];
             mVPL = new double[n, m];
+            mColheita = new double[n, m];
+            mBaldeio = new double[n, m];
+            mTransporte = new double[n, m];
+            mSilvicultura = new double[n, m];
+            mImplantacao = new double[n, m];
+            mAnteriores = new double[n, m];
             mCorte = new bool[n, m, h];
             mVolume = new double[n, m, h];
             mAdj = new bool[n, n];
@@ -85,13 +91,21 @@ namespace Heuristics
 
             worksheet = (Excel.Worksheet)workbook.Sheets["Prescrições"];
 
-            Excel.Range range = worksheet.get_Range(CellFormat(2, 1), CellFormat(n * m + 2, 10));
+            Excel.Range range = worksheet.get_Range(CellFormat(2, 1), CellFormat(n * m + 2, 16));
 
             object[,] values = (object[,])range.Value2;
 
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
+                {
                     mVPL[i, j] = Convert.ToDouble(values[i * m + j + 1, 10]);
+                    mColheita[i, j] = Convert.ToDouble(values[i * m + j + 1, 11]);
+                    mBaldeio[i, j] = Convert.ToDouble(values[i * m + j + 1, 12]);
+                    mTransporte[i, j] = Convert.ToDouble(values[i * m + j + 1, 13]);
+                    mSilvicultura[i, j] = Convert.ToDouble(values[i * m + j + 1, 14]);
+                    mImplantacao[i, j] = Convert.ToDouble(values[i * m + j + 1, 15]);
+                    mAnteriores[i, j] = Convert.ToDouble(values[i * m + j + 1, 16]);
+                }
 
             for (int i = 0; i < n; i++)
             {
