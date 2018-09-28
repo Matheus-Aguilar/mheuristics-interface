@@ -3,7 +3,12 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace Heuristics
 {

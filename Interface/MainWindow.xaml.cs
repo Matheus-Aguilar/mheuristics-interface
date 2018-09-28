@@ -114,6 +114,25 @@ namespace Interface
             dialog.ShowDialog();
         }
 
+        private void ExportResults_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "Arquivos do Excel|*.xlsx|Todos os arquivos|*.*"
+            };
+
+            dialog.FileOk += (_, __) =>
+            {
+                Cursor = Cursors.Wait;
+
+                ExportData.ExportResults(dialog.FileName, Heuristic.solucao);
+
+                Cursor = Cursors.Arrow;
+            };
+
+            dialog.ShowDialog();
+        }
+
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             if (step0.Visibility == Visibility.Visible || step2.Visibility == Visibility.Visible)
