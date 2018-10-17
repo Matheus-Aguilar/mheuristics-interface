@@ -141,6 +141,11 @@ namespace Heuristics
         public static double[,] mAnteriores;
         [JsonProperty]
         /// <summary>
+        /// matriz de receitas
+        /// </summary>
+        public static double[,] mReceita;
+        [JsonProperty]
+        /// <summary>
         /// matriz que indica se o talhão i sobre a prescrição j será cortado no ano k
         /// </summary>
         public static bool[,,] mCorte;

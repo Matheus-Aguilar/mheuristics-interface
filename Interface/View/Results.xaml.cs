@@ -23,6 +23,7 @@ namespace Interface.View
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public string TempoExecucao { get; set; }
+        public string ValorTempoExecucao { get; set; }
 
         public Results()
         {

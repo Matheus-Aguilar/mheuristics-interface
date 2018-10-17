@@ -62,16 +62,18 @@ namespace Interface.View
             double silviculturaTotal = 0;
             double implantacaoTotal = 0;
             double anterioresTotal = 0;
-            double VPLTotal = 0; 
+            double VPLTotal = 0;
+            double receitaTotal = 0;
 
             for(int i = 0; i < HeuristicsBase.n; i++)
             {
-                colheitaTotal += HeuristicsBase.mColheita[i, solucao[i]];
-                baldeioTotal += HeuristicsBase.mBaldeio[i, solucao[i]];
-                transporteTotal += HeuristicsBase.mTransporte[i, solucao[i]];
-                silviculturaTotal += HeuristicsBase.mSilvicultura[i, solucao[i]];
-                implantacaoTotal += HeuristicsBase.mImplantacao[i, solucao[i]];
-                anterioresTotal += HeuristicsBase.mAnteriores[i, solucao[i]];
+                colheitaTotal += HeuristicsBase.mColheita[i, solucao[i]] * HeuristicsBase.talhoes[i].area;
+                baldeioTotal += HeuristicsBase.mBaldeio[i, solucao[i]] * HeuristicsBase.talhoes[i].area; ;
+                transporteTotal += HeuristicsBase.mTransporte[i, solucao[i]] * HeuristicsBase.talhoes[i].area; ;
+                silviculturaTotal += HeuristicsBase.mSilvicultura[i, solucao[i]] * HeuristicsBase.talhoes[i].area; ;
+                implantacaoTotal += HeuristicsBase.mImplantacao[i, solucao[i]] * HeuristicsBase.talhoes[i].area; ;
+                anterioresTotal += HeuristicsBase.mAnteriores[i, solucao[i]] * HeuristicsBase.talhoes[i].area;
+                receitaTotal += HeuristicsBase.mReceita[i, solucao[i]] * HeuristicsBase.talhoes[i].area;
                 VPLTotal += HeuristicsBase.mVPL[i, solucao[i]];
             }
 
@@ -88,9 +90,12 @@ namespace Interface.View
             serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(implantacaoTotal));
             xAxis.ActualLabels.Add("   Custos\nAnteriores");
             serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(anterioresTotal));
+            xAxis.ActualLabels.Add("Receita Total\n   (R$/10)");
+            serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(receitaTotal/10));
+            serieCustos.Items[6].Color = OxyPlot.OxyColor.FromRgb(50, 50, 50);
             xAxis.ActualLabels.Add("VPL");
             serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(VPLTotal));
-            serieCustos.Items[6].Color = OxyPlot.OxyColor.FromRgb(80, 200, 255);
+            serieCustos.Items[7].Color = OxyPlot.OxyColor.FromRgb(80, 200, 255);
             
             plotCustos.Axes.Add(xAxis);
 

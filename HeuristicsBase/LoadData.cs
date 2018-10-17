@@ -47,6 +47,7 @@ namespace Heuristics
             mSilvicultura = new double[n, m];
             mImplantacao = new double[n, m];
             mAnteriores = new double[n, m];
+            mReceita = new double[n, m];
             mCorte = new bool[n, m, h];
             mVolume = new double[n, m, h];
             mAdj = new bool[n, n];
@@ -103,6 +104,7 @@ namespace Heuristics
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
                 {
+                    mReceita[i, j] = Convert.ToDouble(values[i * m + j + 1, 9]);
                     mVPL[i, j] = Convert.ToDouble(values[i * m + j + 1, 10]);
                     mColheita[i, j] = Convert.ToDouble(values[i * m + j + 1, 11]);
                     mBaldeio[i, j] = Convert.ToDouble(values[i * m + j + 1, 12]);

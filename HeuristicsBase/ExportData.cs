@@ -27,7 +27,7 @@ namespace Heuristics
         }
 
         
-        public static void ExportResults(string filename, int [] solucao)
+        public static void ExportResults(string filename, int [] solucao, string tempoDeExecucao)
         {
             Excel.Application app = new Excel.Application();
 
@@ -117,6 +117,65 @@ namespace Heuristics
                 worksheet.Cells[cont, 2] = soma[i];
                 cont++;
             }
+
+            double colheitaTotal = 0;
+            double baldeioTotal = 0;
+            double transporteTotal = 0;
+            double silviculturaTotal = 0;
+            double implantacaoTotal = 0;
+            double anterioresTotal = 0;
+            double VPLTotal = 0;
+            double receitaTotal = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                colheitaTotal += mColheita[i, solucao[i]] * talhoes[i].area;
+                baldeioTotal += mBaldeio[i, solucao[i]] * talhoes[i].area; ;
+                transporteTotal += mTransporte[i, solucao[i]] * talhoes[i].area; ;
+                silviculturaTotal += mSilvicultura[i, solucao[i]] * talhoes[i].area; ;
+                implantacaoTotal += mImplantacao[i, solucao[i]] * talhoes[i].area; ;
+                anterioresTotal += mAnteriores[i, solucao[i]] * talhoes[i].area;
+                receitaTotal += mReceita[i, solucao[i]] * talhoes[i].area;
+                VPLTotal += mVPL[i, solucao[i]];
+            }
+
+            worksheet.Cells[cont, 1] = "Custos";
+            worksheet.Cells[cont, 2] = "Valor (R$)";
+            cont++;
+
+            
+            worksheet.Cells[cont, 1] = "Colheita";
+            worksheet.Cells[cont, 2] = colheitaTotal;
+            cont++;
+            worksheet.Cells[cont, 1] = "Baldeio";
+            worksheet.Cells[cont, 2] = baldeioTotal;
+            cont++;
+            worksheet.Cells[cont, 1] = "Transporte";
+            worksheet.Cells[cont, 2] = transporteTotal;
+            cont++;
+            worksheet.Cells[cont, 1] = "Silvicultura";
+            worksheet.Cells[cont, 2] = silviculturaTotal;
+            cont++;
+            worksheet.Cells[cont, 1] = "Implantação";
+            worksheet.Cells[cont, 2] = implantacaoTotal;
+            cont++;
+            worksheet.Cells[cont, 1] = "Anteriores";
+            worksheet.Cells[cont, 2] = anterioresTotal;
+            cont+=2;
+
+            worksheet.Cells[cont, 1] = "Receita Total (R$)";
+            worksheet.Cells[cont, 2] = receitaTotal;
+
+            cont += 2;
+
+            worksheet.Cells[cont, 1] = "VPL";
+            worksheet.Cells[cont, 2] = VPLTotal;
+
+            cont += 2;
+
+            worksheet.Cells[cont, 1] = "Tempo de Execução";
+            worksheet.Cells[cont, 2] = tempoDeExecucao;
+            cont++;
 
             worksheet.Name = "Resultados";
             workbook.SaveAs(filename);

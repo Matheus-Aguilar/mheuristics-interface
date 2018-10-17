@@ -68,7 +68,8 @@ namespace Interface.View
             {
                 watch.Stop();
 
-                mainWindow.Results.TempoExecucao = "Tempo de execução: " + watch.Elapsed.ToString("c");
+                mainWindow.Results.ValorTempoExecucao = watch.Elapsed.ToString("c");
+                mainWindow.Results.TempoExecucao = "Tempo de execução: " + mainWindow.Results.ValorTempoExecucao;
 
                 mainWindow.EndHeuristic();
             };

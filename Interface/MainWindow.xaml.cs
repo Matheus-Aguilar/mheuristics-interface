@@ -125,7 +125,7 @@ namespace Interface
             {
                 Cursor = Cursors.Wait;
 
-                ExportData.ExportResults(dialog.FileName, Heuristic.solucao);
+                ExportData.ExportResults(dialog.FileName, Heuristic.solucao, Results.ValorTempoExecucao);
 
                 Cursor = Cursors.Arrow;
             };
