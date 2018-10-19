@@ -118,6 +118,8 @@ namespace Heuristics
                 cont++;
             }
 
+            cont++;
+
             double colheitaTotal = 0;
             double baldeioTotal = 0;
             double transporteTotal = 0;

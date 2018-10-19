@@ -138,9 +138,22 @@ namespace Interface
             if (step0.Visibility == Visibility.Visible || step2.Visibility == Visibility.Visible)
                 return;
 
+            if(step1.Visibility == Visibility.Visible)
+            {
+                step1.Visibility = Visibility.Hidden;
+                step0.Visibility = Visibility.Visible;
+                return;
+            }
+
             step3.Visibility = Visibility.Hidden;
             HeuristicsView.Reset();
             step1.Visibility = Visibility.Visible;
+        }
+
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = Environment.CurrentDirectory + @"\..\..\help.pdf";
+            Process.Start(fileName);
         }
 
         private void LoadData_Loaded(object sender, RoutedEventArgs e)
