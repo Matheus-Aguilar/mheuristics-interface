@@ -53,7 +53,7 @@ namespace Heuristics
             return m - 1;
         }
 
-        bool pertuba(ref int[] solucao)
+        bool pertuba(ref int[] solucao, int vizinhanca)
         {
             int[] novaSolucao;
             var valorAtual = avaliar((int[])solucao.Clone()).Item1;
@@ -66,7 +66,37 @@ namespace Heuristics
 
                 int rndPosicao2;
 
-                if (opt == 2)
+                if (opt == 3)
+                {
+                    if (vizinhanca == 0) // 1-OPT
+                    {
+                        novaSolucao[rndPosicao] = selecionaPresc(ref novaSolucao, rndPosicao);
+                    }
+                    else if (vizinhanca == 1) // 2-OPT
+                    {
+                        do
+                            rndPosicao2 = rand.Next(n);
+                        while (rndPosicao2 == rndPosicao);
+
+                        Task<int>[] funcoes = new Task<int>[2];
+
+                        funcoes[0] = new Task<int>(() => selecionaPresc(ref novaSolucao, rndPosicao));
+                        funcoes[1] = new Task<int>(() => selecionaPresc(ref novaSolucao, rndPosicao2));
+
+                        foreach (var task in funcoes)
+                            task.Start();
+
+                        Task.WaitAll(funcoes);
+
+                        novaSolucao[rndPosicao] = funcoes[0].Result;
+                        novaSolucao[rndPosicao2] = funcoes[1].Result;
+                    }
+                    else // Random
+                    {
+                        novaSolucao[rndPosicao] = rand.Next(m);
+                    }
+                }
+                else if (opt == 2)
                 {
                     do
                         rndPosicao2 = rand.Next(n);
@@ -107,25 +137,66 @@ namespace Heuristics
         {
             solucao = geraSolucaoGulosa(tipo, alfaGrasp);
 
-            for (var i = 0; i < numIteracoesLocal; i++)
-                while (pertuba(ref solucao)) ;
-
-            Iteracoes.Add(avaliar(solucao));
-
-            for (var i = 0; i < numIteracoesGuloso; i++)
+            if (opt == 3)
             {
-                var novaSolucao = geraSolucaoGulosa(tipo, alfaGrasp);
+                int k = 0, k_max = 3;
 
-                for (var j = 0; j < numIteracoesLocal; j++)
-                    while (pertuba(ref novaSolucao)) ;
+                while (k != k_max)
+                {
+                    for (var i = 0; i < numIteracoesLocal; i++)
+                        while (pertuba(ref solucao, k)) ;
+                    k++;
+                }
 
-                if (avaliar(novaSolucao).Item1 > avaliar(solucao).Item1)
-                    solucao = novaSolucao;
+                Iteracoes.Add(avaliar(solucao));
 
-                Iteracoes.Add(avaliar(novaSolucao));
+                for (var i = 0; i < numIteracoesGuloso; i++)
+                {
+                    var novaSolucao = geraSolucaoGulosa(tipo, alfaGrasp);
+
+                    k = 0;
+                    while (k != k_max)
+                    {
+                        for (var j = 0; j < numIteracoesLocal; j++)
+                        {
+                            while (pertuba(ref novaSolucao, k)) ;
+                        }
+                        k++;
+                    }
+
+                    if (avaliar(novaSolucao).Item1 > avaliar(solucao).Item1)
+                        solucao = novaSolucao;
+
+                    Iteracoes.Add(avaliar(novaSolucao));
+                }
+
+                Iteracoes = Iteracoes.OrderBy(p => p.Item1).ToList();
             }
+            else
+            {
+                int k = 0;
+                
+                for (var i = 0; i < numIteracoesLocal; i++)
+                    while (pertuba(ref solucao, k)) ;
 
-            Iteracoes = Iteracoes.OrderBy(p => p.Item1).ToList();
+                Iteracoes.Add(avaliar(solucao));
+
+                for (var i = 0; i < numIteracoesGuloso; i++)
+                {
+                    var novaSolucao = geraSolucaoGulosa(tipo, alfaGrasp);
+
+                    for (var j = 0; j < numIteracoesLocal; j++)
+                        while (pertuba(ref novaSolucao, k)) ;
+                     
+
+                    if (avaliar(novaSolucao).Item1 > avaliar(solucao).Item1)
+                        solucao = novaSolucao;
+
+                    Iteracoes.Add(avaliar(novaSolucao));
+                }
+
+                Iteracoes = Iteracoes.OrderBy(p => p.Item1).ToList();
+            }
         }
     }
 }

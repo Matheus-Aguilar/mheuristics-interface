@@ -26,6 +26,7 @@ namespace Interface.View
         public event PropertyChangedEventHandler PropertyChanged;
         public MainWindow mainWindow;
         public HeuristicsBase Heuristic;
+        public bool isOpen = false;
 
         public HeuristicsView()
         {
@@ -39,6 +40,8 @@ namespace Interface.View
             step2.Children.Add(new GeneticAlgorithmView { mainWindow = mainWindow, Heuristics = Heuristic });
 
             step2.Visibility = Visibility.Visible;
+
+            isOpen = true;
         }
 
         private void SA_Click(object sender, RoutedEventArgs e)
@@ -48,6 +51,8 @@ namespace Interface.View
             step2.Children.Add(new SimulatedAnnealingView { mainWindow = mainWindow, Heuristics = Heuristic });
 
             step2.Visibility = Visibility.Visible;
+
+            isOpen = true;
         }
 
         private void GRASP_Click(object sender, RoutedEventArgs e)
@@ -57,6 +62,8 @@ namespace Interface.View
             step2.Children.Add(new GRASPView { mainWindow = mainWindow, Heuristics = Heuristic });
 
             step2.Visibility = Visibility.Visible;
+
+            isOpen = true;
         }
 
         private void VNS_Click(object sender, RoutedEventArgs e)
@@ -66,6 +73,8 @@ namespace Interface.View
             step2.Children.Add(new VNSView { mainWindow = mainWindow, Heuristics = Heuristic });
 
             step2.Visibility = Visibility.Visible;
+
+            isOpen = true;
         }
 
         public void Reset()

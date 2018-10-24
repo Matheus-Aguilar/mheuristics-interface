@@ -30,6 +30,7 @@ namespace Interface.View
         public int numIteracoesGuloso { get; set; }
         public bool opt1 { get { return opt == 1; } set { opt = 1; } }
         public bool opt2 { get { return opt == 2; } set { opt = 2; } }
+        public bool vns { get { return opt == 3; } set { opt = 3; } }
         public bool cardinalidade { get { return tipo == 1; } set { tipo = 1; } }
         public bool valor { get { return tipo == 2; } set { tipo = 2; } }
 

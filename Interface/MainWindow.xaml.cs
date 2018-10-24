@@ -138,13 +138,15 @@ namespace Interface
             if (step0.Visibility == Visibility.Visible || step2.Visibility == Visibility.Visible)
                 return;
 
-            if(step1.Visibility == Visibility.Visible)
+            if(step1.Visibility == Visibility.Visible && !HeuristicsView.isOpen)
             {
+                HeuristicsView.Reset();
                 step1.Visibility = Visibility.Hidden;
                 step0.Visibility = Visibility.Visible;
                 return;
             }
 
+            HeuristicsView.isOpen = false;
             step3.Visibility = Visibility.Hidden;
             HeuristicsView.Reset();
             step1.Visibility = Visibility.Visible;
