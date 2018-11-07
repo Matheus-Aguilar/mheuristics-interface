@@ -46,6 +46,17 @@ namespace Interface.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Algoritmo Genético"); //Nome
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("População Inicial");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(populacaoInicial.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Taxa de Cruzamento");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(taxaCruzamento.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Taxa de Mutação");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(taxaMutacao.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Número de Iterações");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(numIteracoes.ToString());
+
             BackgroundWorker bkw = new BackgroundWorker();
 
             mainWindow.StartHeuristic();
@@ -63,8 +74,8 @@ namespace Interface.View
             {
                 watch.Stop();
 
-                mainWindow.Results.ValorTempoExecucao = watch.Elapsed.ToString("c");
-                mainWindow.Results.TempoExecucao = "Tempo de execução: " + mainWindow.Results.ValorTempoExecucao;
+                mainWindow.Results.ValorTempoExecucao = watch.Elapsed;
+                mainWindow.Results.TempoExecucao = "Tempo de execução: " + watch.Elapsed.ToString(@"hh\:mm\:ss");
 
                 mainWindow.EndHeuristic();
             };

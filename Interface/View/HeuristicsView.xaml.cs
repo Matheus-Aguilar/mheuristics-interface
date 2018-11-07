@@ -27,6 +27,7 @@ namespace Interface.View
         public MainWindow mainWindow;
         public HeuristicsBase Heuristic;
         public bool isOpen = false;
+        public List<string> parametrosHeuristica = new List<string>();
 
         public HeuristicsView()
         {

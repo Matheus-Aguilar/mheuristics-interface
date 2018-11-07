@@ -51,6 +51,18 @@ namespace Interface.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Têmpera Simulada"); //Nome
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Temparatura Inicial");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(t.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Temperatura Final");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(tf.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Taxa de Resfriamento");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(taxaResf.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Número de Iterações");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(contIteracao.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Tipo");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(opt == 1 ? "1-Opt" : "2-Opt");
+
             BackgroundWorker bkw = new BackgroundWorker();
 
             mainWindow.StartHeuristic();
@@ -68,8 +80,8 @@ namespace Interface.View
             {
                 watch.Stop();
 
-                mainWindow.Results.ValorTempoExecucao = watch.Elapsed.ToString("c");
-                mainWindow.Results.TempoExecucao = "Tempo de execução: " + mainWindow.Results.ValorTempoExecucao;
+                mainWindow.Results.ValorTempoExecucao = watch.Elapsed;
+                mainWindow.Results.TempoExecucao = "Tempo de execução: " + watch.Elapsed.ToString(@"hh\:mm\:ss");
 
                 mainWindow.EndHeuristic();
             };

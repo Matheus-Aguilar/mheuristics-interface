@@ -42,6 +42,10 @@ namespace Interface.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("VNS"); //Nome
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Número de Iterações");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(contIteracao.ToString());
+
             BackgroundWorker bkw = new BackgroundWorker();
 
             mainWindow.StartHeuristic();
@@ -59,8 +63,8 @@ namespace Interface.View
             {
                 watch.Stop();
 
-                mainWindow.Results.ValorTempoExecucao = watch.Elapsed.ToString("c");
-                mainWindow.Results.TempoExecucao = "Tempo de execução: " + mainWindow.Results.ValorTempoExecucao;
+                mainWindow.Results.ValorTempoExecucao = watch.Elapsed;
+                mainWindow.Results.TempoExecucao = "Tempo de execução: " + watch.Elapsed.ToString(@"hh\:mm\:ss");
 
                 mainWindow.EndHeuristic();
             };

@@ -51,7 +51,7 @@ namespace Interface.View
                 MaximumPadding = 0.1
             });
 
-            var serieCustos = new OxyPlot.Series.ColumnSeries { Title = "Custos Totais", StrokeThickness = 2};
+            var serieCustos = new OxyPlot.Series.ColumnSeries { Title = "Custos Totais", StrokeThickness = 2, FillColor = OxyPlot.OxyColor.FromRgb(180, 180, 180) };
             serieCustos.LabelPlacement = OxyPlot.Series.LabelPlacement.Outside;
             serieCustos.LabelFormatString = "{0:.00}";
 
@@ -92,10 +92,10 @@ namespace Interface.View
             serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(anterioresTotal));
             xAxis.ActualLabels.Add("Receita Total\n   (R$/10)");
             serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(receitaTotal/10));
-            serieCustos.Items[6].Color = OxyPlot.OxyColor.FromRgb(50, 50, 50);
+            serieCustos.Items[6].Color = OxyPlot.OxyColor.FromRgb(30, 30, 30);
             xAxis.ActualLabels.Add("VPL");
             serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(VPLTotal));
-            serieCustos.Items[7].Color = OxyPlot.OxyColor.FromRgb(80, 200, 255);
+            serieCustos.Items[7].Color = OxyPlot.OxyColor.FromRgb(80, 80, 80);
             
             plotCustos.Axes.Add(xAxis);
 
@@ -131,7 +131,7 @@ namespace Interface.View
                     MaximumPadding = 0.1
                 });
 
-                var serieAdjacencia = new OxyPlot.Series.LineSeries { Title = "Quebra de adjacência", StrokeThickness = 2, Color = OxyPlot.OxyColor.FromRgb(0, 0, 255), CanTrackerInterpolatePoints = false };
+                var serieAdjacencia = new OxyPlot.Series.LineSeries { Title = "Quebra de adjacência", StrokeThickness = 2, Color = OxyPlot.OxyColor.FromRgb(0, 0, 0), CanTrackerInterpolatePoints = false };
 
                 for (int i = 0; i < HeuristicsBase.n; i++)
                     for (int k = 0; k < HeuristicsBase.h; k++)
@@ -161,7 +161,7 @@ namespace Interface.View
                     MaximumPadding = 0.1
                 });
 
-                var serieIAC = new OxyPlot.Series.LineSeries { Title = "IAC por ano", StrokeThickness = 2, CanTrackerInterpolatePoints = false };
+                var serieIAC = new OxyPlot.Series.LineSeries { Title = "IAC por ano", StrokeThickness = 2, CanTrackerInterpolatePoints = false, Color = OxyPlot.OxyColor.FromRgb(0, 0, 0) };
 
                 double IAC, area2, distMaisProximo, areasCortadas;
 
@@ -220,9 +220,9 @@ namespace Interface.View
                 MaximumPadding = 0.1
             });
 
-            var serieVolumeCortado = new OxyPlot.Series.ColumnSeries { Title = "Volume cortado", StrokeThickness = 2};
-            var serieMinVolumeCortado = new OxyPlot.Series.LineSeries { Selectable = false, Title = "Mínimo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
-            var serieMaxVolumeCortado = new OxyPlot.Series.LineSeries { Title = "Máximo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
+            var serieVolumeCortado = new OxyPlot.Series.ColumnSeries { Title = "Volume cortado", StrokeThickness = 2, FillColor = OxyPlot.OxyColor.FromRgb(180, 180, 180) };
+            var serieMinVolumeCortado = new OxyPlot.Series.LineSeries { Selectable = false, Title = "Mínimo", Color = OxyPlot.OxyColor.FromRgb(0, 0, 0), CanTrackerInterpolatePoints = false };
+            var serieMaxVolumeCortado = new OxyPlot.Series.LineSeries { Title = "Máximo", Color = OxyPlot.OxyColor.FromRgb(0, 0, 0), CanTrackerInterpolatePoints = false };
 
             serieMinVolumeCortado.Points.Add(new OxyPlot.DataPoint(-1000, HeuristicsBase.volMin));
             serieMaxVolumeCortado.Points.Add(new OxyPlot.DataPoint(-1000, HeuristicsBase.volMax));
@@ -232,7 +232,7 @@ namespace Interface.View
             //Adicionando o volume médio ao gráfico
             xAxis.ActualLabels.Add("Md");
             serieVolumeCortado.Items.Add(new OxyPlot.Series.ColumnItem(HeuristicsBase.volumeMedio));
-            serieVolumeCortado.Items[0].Color = OxyPlot.OxyColor.FromRgb(80, 200, 255);
+            serieVolumeCortado.Items[0].Color = OxyPlot.OxyColor.FromRgb(80, 80, 80);
 
             for (var i = 0; i < HeuristicsBase.h; i++)
             {
@@ -272,9 +272,9 @@ namespace Interface.View
                 MaximumPadding = 0.1
             });
 
-            var serieFlorestaRegulada = new OxyPlot.Series.ColumnSeries { Title = "Area de corte", StrokeThickness = 2 };
-            var serieMinFlorestaRegulada = new OxyPlot.Series.LineSeries { Title = "Mínimo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
-            var serieMaxFlorestaRegulada = new OxyPlot.Series.LineSeries { Title = "Máximo", Color = OxyPlot.OxyColor.FromRgb(255, 0, 0), CanTrackerInterpolatePoints = false };
+            var serieFlorestaRegulada = new OxyPlot.Series.ColumnSeries { Title = "Area de corte", StrokeThickness = 2, FillColor = OxyPlot.OxyColor.FromRgb(180, 180, 180) };
+            var serieMinFlorestaRegulada = new OxyPlot.Series.LineSeries { Title = "Mínimo", Color = OxyPlot.OxyColor.FromRgb(0, 0, 0), CanTrackerInterpolatePoints = false };
+            var serieMaxFlorestaRegulada = new OxyPlot.Series.LineSeries { Title = "Máximo", Color = OxyPlot.OxyColor.FromRgb(0, 0, 0), CanTrackerInterpolatePoints = false };
 
             serieMinFlorestaRegulada.Points.Add(new OxyPlot.DataPoint(-1000, HeuristicsBase.areaPorR_menosAlfaReg));
             serieMaxFlorestaRegulada.Points.Add(new OxyPlot.DataPoint(-1000, HeuristicsBase.areaPorR_maisAlfaReg));

@@ -66,14 +66,14 @@ namespace Interface.View
             {
                 Key = "yAxis",
                 Position = AxisPosition.Left,
-                Title = "Função objetivo"
+                Title = "Função objetivo (R$)"
             });
 
             plotRR.Axes.Add(new LinearAxis
             {
                 Key = "yAxis",
                 Position = AxisPosition.Left,
-                Title = "Restrição de regulação de área"
+                Title = "Restrição de regulação de área (ha)"
             });
 
             plotRA.Axes.Add(new LinearAxis
@@ -87,13 +87,13 @@ namespace Interface.View
             {
                 Key = "yAxis",
                 Position = AxisPosition.Left,
-                Title = "Restrição de volume"
+                Title = "Restrição de volume (m³)"
             });
 
-            var serieFO = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false };
-            var serieRR = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false };
-            var serieRA = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false };
-            var serieRV = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false };
+            var serieFO = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false, Color = OxyPlot.OxyColor.FromRgb(0, 0, 0) };
+            var serieRR = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false, Color = OxyPlot.OxyColor.FromRgb(0, 0, 0) };
+            var serieRA = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false, Color = OxyPlot.OxyColor.FromRgb(0, 0, 0) };
+            var serieRV = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false, Color = OxyPlot.OxyColor.FromRgb(0, 0, 0) };
 
             int count = 1;
 

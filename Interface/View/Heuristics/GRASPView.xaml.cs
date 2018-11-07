@@ -54,6 +54,18 @@ namespace Interface.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("GRASP"); //Nome
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Alfa");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(alfaGrasp.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Iterações da Busca Local");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(numIteracoesLocal.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Iterações da Fase Construtiva");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(numIteracoesGuloso.ToString());
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Vizinhança");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(opt == 3 ? "VNS" : opt + "-Opt");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add("Tipo");
+            mainWindow.HeuristicsView.parametrosHeuristica.Add(tipo == 1 ? "Cardinalidade" : "Valor");
+
             BackgroundWorker bkw = new BackgroundWorker();
 
             mainWindow.StartHeuristic();
@@ -71,8 +83,8 @@ namespace Interface.View
             {
                 watch.Stop();
 
-                mainWindow.Results.ValorTempoExecucao = watch.Elapsed.ToString("c");
-                mainWindow.Results.TempoExecucao = "Tempo de execução: " + mainWindow.Results.ValorTempoExecucao;
+                mainWindow.Results.ValorTempoExecucao = watch.Elapsed;
+                mainWindow.Results.TempoExecucao = "Tempo de execução: " + watch.Elapsed.ToString(@"hh\:mm\:ss");
 
                 mainWindow.EndHeuristic();
             };
