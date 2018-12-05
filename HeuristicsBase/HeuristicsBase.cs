@@ -115,30 +115,41 @@ namespace Heuristics
         /// matriz de VPLs
         /// </summary>
         public static double[,] mVPL;
+        [JsonProperty]
         /// <summary>
         /// matriz de custos de colheita
         /// </summary>
         public static double[,] mColheita;
+        [JsonProperty]
         /// <summary>
         /// matriz de custos de baldeio
         /// </summary>
         public static double[,] mBaldeio;
+        [JsonProperty]
         /// <summary>
         /// matriz de custos de transporte
         /// </summary>
         public static double[,] mTransporte;
+        [JsonProperty]
         /// <summary>
         /// matriz de custos de silvicultura
         /// </summary>
         public static double[,] mSilvicultura;
+        [JsonProperty]
         /// <summary>
         /// matriz de custos de implantação
         /// </summary>
         public static double[,] mImplantacao;
+        [JsonProperty]
         /// <summary>
         /// matriz de custos anteriores
         /// </summary>
         public static double[,] mAnteriores;
+        [JsonProperty]
+        /// <summary>
+        /// matriz de custos médios de produção
+        /// </summary>
+        public static double[,] mCustosMedios;
         [JsonProperty]
         /// <summary>
         /// matriz de receitas
@@ -169,6 +180,26 @@ namespace Heuristics
         /// matriz que indica a área do talhao i na prescricao j com a idade regulatória k
         /// </summary>
         public static double[,,] mRegArea;
+        [JsonProperty]
+        /// <summary>
+        /// valor final da função objetivo
+        /// </summary>
+        public static double fObjetivoFinal;
+        [JsonProperty]
+        /// <summary>
+        /// valor final da restrição de adjacência
+        /// </summary>
+        public static double rAdjFinal;
+        [JsonProperty]
+        /// <summary>
+        /// valor final da restrição de área
+        /// </summary>
+        public static double rAreaFinal;
+        [JsonProperty]
+        /// <summary>
+        /// valor final da restrição de volume
+        /// </summary>
+        public static double rVolumeFinal;
 
         [JsonProperty]
         public static double areaPorR;
@@ -182,6 +213,11 @@ namespace Heuristics
         /// booleano que indica se a função de avaliação leva em consideração area de adjacencia ou IAC
         /// </summary>
         public static bool areaAdjacencia;
+        [JsonProperty]
+        /// <summary>
+        /// booleano que indica se a função objetivo deve maximizar ou minimizar o resultado
+        /// </summary>
+        public static bool minimizar;
 
         public static Random rand;
         #endregion
@@ -214,8 +250,12 @@ namespace Heuristics
             {
                 double funcaoObjetivo = 0;
 
-                for (int i = 0; i < n; i++)
-                    funcaoObjetivo += mVPL[i, solucao[i]];
+                if(!minimizar)
+                    for (int i = 0; i < n; i++)
+                        funcaoObjetivo += mVPL[i, solucao[i]];
+                else
+                    for (int i = 0; i < n; i++)
+                        funcaoObjetivo += mCustosMedios[i, solucao[i]];
 
                 return funcaoObjetivo;
             });
@@ -309,7 +349,7 @@ namespace Heuristics
                         for (int j = 0; j < n; j++)
                             if (mCorte[j, solucao[j], i])
                             {
-                                areasCortadas += talhoes[i].area * talhoes[i].area;
+                                areasCortadas += talhoes[i].area; // * talhoes[i].area;
 
                                 area2 = talhoes[j].area * talhoes[j].area;
 
@@ -356,10 +396,18 @@ namespace Heuristics
 
             Task.WaitAll(funcoes);
 
-            double funcaoAvalicao = funcoes[0].Result
-                - funcoes[1].Result * funcoes[1].Result * alfa
-                - funcoes[2].Result * funcoes[2].Result * beta
-                - funcoes[3].Result * funcoes[3].Result * gama;
+            double funcaoAvalicao;
+
+            if(!minimizar)
+                funcaoAvalicao = funcoes[0].Result
+                    - funcoes[1].Result * funcoes[1].Result * alfa
+                    - funcoes[2].Result * funcoes[2].Result * beta
+                    - funcoes[3].Result * funcoes[3].Result * gama;
+            else
+                funcaoAvalicao = funcoes[0].Result
+                    + funcoes[1].Result * funcoes[1].Result * alfa
+                    + funcoes[2].Result * funcoes[2].Result * beta
+                    + funcoes[3].Result * funcoes[3].Result * gama;
 
             return Tuple.Create<double, double, double, double, double, double>
                 (funcaoAvalicao, funcoes[0].Result, funcoes[1].Result, funcoes[2].Result, funcoes[3].Result, HeuristicsBase.penalidadeInicial);
@@ -369,9 +417,9 @@ namespace Heuristics
         {
             int[] solucao = new int[n];
 
-            do
-                solucao = solucao.Select(_ => rand.Next(nAf)).ToArray();
-            while (avaliar(solucao).Item1 < 0);
+                do
+                    solucao = solucao.Select(_ => rand.Next(nAf)).ToArray();
+                while (avaliar(solucao).Item1 < 0);
 
             return solucao;
         }
@@ -401,7 +449,10 @@ namespace Heuristics
 
                 if (tipo == 1)
                 {
-                    rcl = rcl.OrderBy(p => -p.Item2).ToList();
+                    if(!minimizar)
+                        rcl = rcl.OrderBy(p => -p.Item2).ToList();
+                    else
+                        rcl = rcl.OrderBy(p => p.Item2).ToList();
 
                     sol[i] = rcl[rand.Next(Convert.ToInt32(alfa * rcl.Count)) + 1].Item1;
                 }
@@ -409,10 +460,17 @@ namespace Heuristics
                 {
                     var cMin = rcl.Min(p => p.Item2);
                     var cMax = rcl.Max(p => p.Item2);
-
-                    var limite = cMax - alfa * Math.Abs(cMax - cMin);
-
-                    rcl = rcl.Where(p => p.Item2 > limite).ToList();
+                    
+                    if (!minimizar)
+                    {
+                        double limite = cMax - alfa * Math.Abs(cMax - cMin);
+                        rcl = rcl.Where(p => p.Item2 > limite).ToList();
+                    }
+                    else
+                    {
+                        double limite = cMin + alfa * Math.Abs(cMax - cMin);
+                        rcl = rcl.Where(p => p.Item2 < limite).ToList();
+                    }
 
                     sol[i] = rcl[rand.Next(rcl.Count)].Item1;
                 }

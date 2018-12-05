@@ -75,7 +75,20 @@ namespace Heuristics
             cont++;
             worksheet1.Cells[cont, 1] = "Green Up";
             worksheet1.Cells[cont, 2] = greenUp;
-            cont+=2;
+            cont += 2;
+            
+            worksheet1.Cells[cont, 1] = "Função Objetivo (R$)";
+            worksheet1.Cells[cont, 2] = fObjetivoFinal;
+            cont++;
+            worksheet1.Cells[cont, 1] = "Restrição de Regulação de Área (ha)";
+            worksheet1.Cells[cont, 2] = rAreaFinal;
+            cont++;
+            worksheet1.Cells[cont, 1] = "Restrição de Volume (m³)";
+            worksheet1.Cells[cont, 2] = rVolumeFinal;
+            cont++;
+            worksheet1.Cells[cont, 1] = "Restrição de Adjacência";
+            worksheet1.Cells[cont, 2] = rAdjFinal;
+            cont += 2;
 
             worksheet1.Cells[cont, 1] = "Heurística Escolhida";
             worksheet1.Cells[cont, 2] = parametrosHeuristica[0];

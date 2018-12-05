@@ -19,34 +19,68 @@ namespace Heuristics
         {
             int prescAntiga = solucao[pos];
 
-            double[] probVPL = new double [m];
-
-            probVPL = probVPL.Select((p, idx) => Math.Abs(mVPL[pos, idx] - mVPL[pos, prescAntiga])).ToArray();
-
-            var soma = probVPL.Aggregate(0.0, (acc, p) => p + acc);
-
-            probVPL = probVPL.Select(p => p / soma).ToArray();
-
-            var r = rand.NextDouble();
-
-            soma = 0;
-
-            for (int j = 0; j < m; j++)
+            if (!minimizar)
             {
-                soma += probVPL[j];
+                double[] probVPL = new double[m];
 
-                if (soma >= r)
-                    return j;
+                probVPL = probVPL.Select((p, idx) => Math.Abs(mVPL[pos, idx] - mVPL[pos, prescAntiga])).ToArray();
+
+                var soma = probVPL.Aggregate(0.0, (acc, p) => p + acc);
+
+                probVPL = probVPL.Select(p => p / soma).ToArray();
+
+                var r = rand.NextDouble();
+
+                soma = 0;
+
+                for (int j = 0; j < m; j++)
+                {
+                    soma += probVPL[j];
+
+                    if (soma >= r)
+                        return j;
+                }
+
+                return m - 1;
             }
+            else
+            {
+                double[] probCustos = new double[m];
 
-            return m - 1;
+                probCustos = probCustos.Select((p, idx) => Math.Abs(mCustosMedios[pos, idx] - mCustosMedios[pos, prescAntiga])).ToArray();
+
+                var soma = probCustos.Aggregate(0.0, (acc, p) => p + acc);
+
+                probCustos = probCustos.Select(p => soma - p).ToArray();
+
+                soma = probCustos.Aggregate(0.0, (acc, p) => p + acc);
+
+                probCustos = probCustos.Select(p => p / soma).ToArray();
+
+                var r = rand.NextDouble();
+
+                soma = 0;
+
+                for (int j = 0; j < m; j++)
+                {
+                    soma += probCustos[j];
+
+                    if (soma >= r)
+                        return j;
+                }
+
+                return m - 1;
+            }
         }
 
         double metropolis(double valorAtual, double valorNovo)
         {
             double delta = valorAtual - valorNovo;
 
-            return Math.Exp(-delta / t);
+            if(!minimizar)
+                return Math.Exp(-delta / t);
+            else
+                return Math.Exp(delta / t);
         }
 
         void pertubaEAvalia()
@@ -93,7 +127,8 @@ namespace Heuristics
 
             double valorNovo = avaliacoes[1].Result, valorAtual = avaliacoes[0].Result;
 
-            if (valorNovo <= valorAtual)
+            if ((valorNovo <= valorAtual && !minimizar)
+            || (valorNovo >= valorAtual && minimizar))
             {
                 double z = metropolis(valorAtual, valorNovo);
                 double r = rand.NextDouble();

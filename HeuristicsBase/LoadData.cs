@@ -47,6 +47,7 @@ namespace Heuristics
             mSilvicultura = new double[n, m];
             mImplantacao = new double[n, m];
             mAnteriores = new double[n, m];
+            mCustosMedios = new double[n, m];
             mReceita = new double[n, m];
             mCorte = new bool[n, m, h];
             mVolume = new double[n, m, h];
@@ -97,7 +98,7 @@ namespace Heuristics
 
             worksheet = (Excel.Worksheet)workbook.Sheets["Prescrições"];
 
-            Excel.Range range = worksheet.get_Range(CellFormat(2, 1), CellFormat(n * m + 2, 16));
+            Excel.Range range = worksheet.get_Range(CellFormat(2, 1), CellFormat(n * m + 2, 17));
 
             object[,] values = (object[,])range.Value2;
 
@@ -112,6 +113,7 @@ namespace Heuristics
                     mSilvicultura[i, j] = Convert.ToDouble(values[i * m + j + 1, 14]);
                     mImplantacao[i, j] = Convert.ToDouble(values[i * m + j + 1, 15]);
                     mAnteriores[i, j] = Convert.ToDouble(values[i * m + j + 1, 16]);
+                    mCustosMedios[i, j] = Convert.ToDouble(values[i * m + j + 1, 17]);
                 }
 
             for (int i = 0; i < n; i++)

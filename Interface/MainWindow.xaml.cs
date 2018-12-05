@@ -222,7 +222,7 @@ namespace Interface
 
         private void Help_Click(object sender, RoutedEventArgs e)
         {
-            string fileName = Environment.CurrentDirectory + @"\..\..\help.pdf";
+            string fileName = Environment.CurrentDirectory + @"\help.pdf";
             Process.Start(fileName);
         }
 

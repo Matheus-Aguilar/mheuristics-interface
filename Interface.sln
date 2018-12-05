@@ -7,20 +7,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "Interface\Inte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heuristics", "HeuristicsBase\Heuristics.csproj", "{2AA97273-3517-4BD8-8C15-1B75469F4972}"
 EndProject
+Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Installer", "Installer\Installer.aiproj", "{05D25F10-6FE6-4BD0-A046-12208F900DB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		All|Any CPU = All|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C5591AA-1F57-4FDC-91B2-4B1B84135DE1}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{5C5591AA-1F57-4FDC-91B2-4B1B84135DE1}.All|Any CPU.Build.0 = Release|Any CPU
 		{5C5591AA-1F57-4FDC-91B2-4B1B84135DE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C5591AA-1F57-4FDC-91B2-4B1B84135DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C5591AA-1F57-4FDC-91B2-4B1B84135DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C5591AA-1F57-4FDC-91B2-4B1B84135DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA97273-3517-4BD8-8C15-1B75469F4972}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA97273-3517-4BD8-8C15-1B75469F4972}.All|Any CPU.Build.0 = Release|Any CPU
 		{2AA97273-3517-4BD8-8C15-1B75469F4972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2AA97273-3517-4BD8-8C15-1B75469F4972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AA97273-3517-4BD8-8C15-1B75469F4972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AA97273-3517-4BD8-8C15-1B75469F4972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05D25F10-6FE6-4BD0-A046-12208F900DB9}.All|Any CPU.ActiveCfg = DefaultBuild
+		{05D25F10-6FE6-4BD0-A046-12208F900DB9}.All|Any CPU.Build.0 = DefaultBuild
+		{05D25F10-6FE6-4BD0-A046-12208F900DB9}.Debug|Any CPU.ActiveCfg = DefaultBuild
+		{05D25F10-6FE6-4BD0-A046-12208F900DB9}.Debug|Any CPU.Build.0 = DefaultBuild
+		{05D25F10-6FE6-4BD0-A046-12208F900DB9}.Release|Any CPU.ActiveCfg = DefaultBuild
+		{05D25F10-6FE6-4BD0-A046-12208F900DB9}.Release|Any CPU.Build.0 = DefaultBuild
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

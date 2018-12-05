@@ -39,7 +39,7 @@ namespace Interface.View
                 Position = AxisPosition.Bottom,
                 Title = "Tipo de Custo",
                 Minimum = -1,
-                Maximum = 8
+                Maximum = 9
             };
 
             plotCustos.Axes.Add(new LinearAxis
@@ -64,6 +64,7 @@ namespace Interface.View
             double anterioresTotal = 0;
             double VPLTotal = 0;
             double receitaTotal = 0;
+            double custoMedioTotal = 0;
 
             for(int i = 0; i < HeuristicsBase.n; i++)
             {
@@ -75,6 +76,7 @@ namespace Interface.View
                 anterioresTotal += HeuristicsBase.mAnteriores[i, solucao[i]] * HeuristicsBase.talhoes[i].area;
                 receitaTotal += HeuristicsBase.mReceita[i, solucao[i]] * HeuristicsBase.talhoes[i].area;
                 VPLTotal += HeuristicsBase.mVPL[i, solucao[i]];
+                custoMedioTotal += HeuristicsBase.mCustosMedios[i, solucao[i]];
             }
 
 
@@ -96,7 +98,10 @@ namespace Interface.View
             xAxis.ActualLabels.Add("VPL");
             serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(VPLTotal));
             serieCustos.Items[7].Color = OxyPlot.OxyColor.FromRgb(80, 80, 80);
-            
+            xAxis.ActualLabels.Add("Custo Médio \nde Produção");
+            serieCustos.Items.Add(new OxyPlot.Series.ColumnItem(custoMedioTotal));
+            serieCustos.Items[8].Color = OxyPlot.OxyColor.FromRgb(80, 80, 80);
+
             plotCustos.Axes.Add(xAxis);
 
             plotCustos.Series.Add(serieCustos);

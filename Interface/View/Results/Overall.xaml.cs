@@ -89,7 +89,6 @@ namespace Interface.View
                 Position = AxisPosition.Left,
                 Title = "Restrição de volume (m³)"
             });
-
             var serieFO = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false, Color = OxyPlot.OxyColor.FromRgb(0, 0, 0) };
             var serieRR = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false, Color = OxyPlot.OxyColor.FromRgb(0, 0, 0) };
             var serieRA = new OxyPlot.Series.LineSeries { CanTrackerInterpolatePoints = false, Color = OxyPlot.OxyColor.FromRgb(0, 0, 0) };
@@ -116,6 +115,11 @@ namespace Interface.View
             plot_interface_2.Model = plotRR;
             plot_interface_3.Model = plotRA;
             plot_interface_4.Model = plotRV;
+
+            HeuristicsBase.fObjetivoFinal = data[data.Count - 1].Item2;
+            HeuristicsBase.rAdjFinal = data[data.Count - 1].Item5;
+            HeuristicsBase.rAreaFinal = data[data.Count - 1].Item4;
+            HeuristicsBase.rVolumeFinal = data[data.Count - 1].Item3 - data[data.Count - 1].Item6;
         }
     }
 }

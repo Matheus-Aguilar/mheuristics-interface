@@ -30,16 +30,36 @@ namespace Heuristics
 
         private double[] gerarProbabilidadesIniciais(int[][] solucoesIniciais)
         {
-            Task<double>[] funcoes = solucoesIniciais.Select(p => new Task<double>(() => avaliar(p).Item1)).ToArray();
+            if (!minimizar)
+            {
+                Task<double>[] funcoes = solucoesIniciais.Select(p => new Task<double>(() => avaliar(p).Item1)).ToArray();
 
-            foreach (var task in funcoes)
-                task.Start();
+                foreach (var task in funcoes)
+                    task.Start();
 
-            Task.WaitAll(funcoes);
+                Task.WaitAll(funcoes);
 
-            double sum = funcoes.Aggregate(0.0, (acc, p) => acc + p.Result);
+                double sum = funcoes.Aggregate(0.0, (acc, p) => acc + p.Result);
 
-            return funcoes.Select(p => p.Result / sum).ToArray();
+                return funcoes.Select(p => p.Result / sum).ToArray();
+            }
+            else
+            {
+                Task<double>[] funcoes = solucoesIniciais.Select(p => new Task<double>(() => avaliar(p).Item1)).ToArray();
+
+                foreach (var task in funcoes)
+                    task.Start();
+
+                Task.WaitAll(funcoes);
+
+                double sum = funcoes.Aggregate(0.0, (acc, p) => acc + p.Result);
+
+                funcoes.Select(p => sum - p.Result).ToArray();
+
+                sum = funcoes.Aggregate(0.0, (acc, p) => acc + p.Result);
+
+                return funcoes.Select(p => p.Result / sum).ToArray();
+            }
         }
 
         private void mutacao(int[] solucao)
@@ -115,10 +135,22 @@ namespace Heuristics
 
             Task.WaitAll(tasks);
 
-            int melhorPai = tasks[0].Result > tasks[1].Result ? 0 : 1;
-            int melhorFilho = tasks[2].Result > tasks[3].Result ? 2 : 3;
+            int melhorPai;
+            int melhorFilho;
 
-            if (tasks[melhorFilho].Result > tasks[melhorPai].Result)
+            if(!minimizar)
+            {
+                melhorPai = tasks[0].Result > tasks[1].Result ? 0 : 1;
+                melhorFilho = tasks[2].Result > tasks[3].Result ? 2 : 3;
+            }
+            else
+            {
+                melhorPai = tasks[0].Result < tasks[1].Result ? 0 : 1;
+                melhorFilho = tasks[2].Result < tasks[3].Result ? 2 : 3;
+            }
+
+            if ((tasks[melhorFilho].Result > tasks[melhorPai].Result && !minimizar)
+                || (tasks[melhorFilho].Result < tasks[melhorPai].Result && minimizar))
             {
                 Iteracoes.Add(avaliar(solucoes[melhorFilho]));
 
@@ -132,7 +164,8 @@ namespace Heuristics
                 int min = 0;
 
                 for (int k = 1; k < tasks.Length; k++)
-                    if (tasks[k].Result < tasks[min].Result)
+                    if ((tasks[k].Result < tasks[min].Result && !minimizar)
+                        ||(tasks[k].Result > tasks[min].Result && minimizar))
                         min = k;
 
                 solucoesIniciais[min] = solucoes[melhorFilho];
@@ -212,7 +245,8 @@ namespace Heuristics
             for (int k = 1; k < populacaoInicial; k++)
             {
                 var aux2 = avaliar(solucoesIniciais[k]);
-                if (maior.Item1 < aux2.Item1)
+                if ((maior.Item1 < aux2.Item1 && !minimizar)
+                    || (maior.Item1 > aux2.Item1 && minimizar))
                 {
                     maior = aux2;
                     Imaior = k;

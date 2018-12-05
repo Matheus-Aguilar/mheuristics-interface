@@ -33,6 +33,7 @@ namespace Interface.View
         public double alfaRegVol { get; set; }
         public double betaRegVol { get; set; }
         public bool isOpen { get; set; }
+        public int minimizar { get; set; }
         public int restricaoAdj { get; set; }
         public int greenUp { get; set; }
 
@@ -58,6 +59,7 @@ namespace Interface.View
             greenUp = HeuristicsBase.greenUp;
 
             restricaoAdj = HeuristicsBase.areaAdjacencia ? 1 : 0;
+            minimizar = HeuristicsBase.minimizar ? 1 : 0;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -73,6 +75,7 @@ namespace Interface.View
             HeuristicsBase.areaPorR_menosAlfaReg = HeuristicsBase.areaPorR * (1 - alfaRegArea);
             HeuristicsBase.areaPorR_maisAlfaReg = HeuristicsBase.areaPorR * (1 + alfaRegArea);
             HeuristicsBase.areaAdjacencia = restricaoAdj == 1;
+            HeuristicsBase.minimizar = minimizar == 1;
             HeuristicsBase.greenUp = greenUp;
 
             isOpen = false;
