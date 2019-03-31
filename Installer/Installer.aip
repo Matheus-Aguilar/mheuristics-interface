@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="15.5.1" version="15.5.1" Modules="simple" RootPath="." Language="en" Id="{CC5CF87D-CCBD-4E73-864C-342EC9D24F80}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="15.5.1" version="15.8" PreviousModules="simple" Modules="professional" RootPath="." Language="en" Id="{CC5CF87D-CCBD-4E73-864C-342EC9D24F80}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
-    <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;FixupComponent"/>
+    <ROW Name="HiddenItems" Value="AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
@@ -29,6 +29,7 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_OxyPlot.Wpf.dll" Value="OxyPlot.Wpf.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_OxyPlot.dll" Value="OxyPlot.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Windows.Interactivity.dll" Value="System.Windows.Interactivity.dll"/>
+    <ROW Property="AI_ThemeStyle" Value="aero" MsiKey="AI_ThemeStyle"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install Green Up." ValueLocId="*"/>
     <ROW Property="Manufacturer" Value="Engenharia Florestal"/>
@@ -39,13 +40,13 @@
     <ROW Property="Produ" Value="Produ"/>
     <ROW Property="Produc" Value="Produc"/>
     <ROW Property="Product" Value="Product"/>
-    <ROW Property="ProductCode" Value="1033:{77FF5988-8691-4951-BE2B-0641799E9EF2} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{F5BF9725-F4E0-4409-8C99-E91DB4053822} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductN" Value="ProductN"/>
     <ROW Property="ProductNa" Value="ProductNa"/>
     <ROW Property="ProductNam" Value="ProductNam"/>
     <ROW Property="ProductName" Value="Green Up"/>
-    <ROW Property="ProductVersion" Value="1.0.3" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.1.0" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{3E56BA0B-AC44-4A7D-A97D-7A2D3A66C4AA}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -74,7 +75,7 @@
     <ROW Component="Interface_SymbolsOutput" ComponentId="{D575AD6A-2227-434D-8A81-3FDFD8C3730B}" Directory_="Interface_Dir" Attributes="0" KeyPath="Interface.pdb"/>
     <ROW Component="ProductInformation" ComponentId="{1601A75A-AF04-4DFB-BF8A-0AE9727557DA}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{75EDA2CD-1557-4A10-8702-463F4BE90AA5}" Directory_="SHORTCUTDIR" Attributes="0"/>
-    <ROW Component="exemplo.xlsx" ComponentId="{AF9F7C09-7EE9-4299-BB70-A4559FC6198C}" Directory_="DesktopFolder" Attributes="0" KeyPath="exemplo.xlsx" Type="0"/>
+    <ROW Component="exemplo.xlsx" ComponentId="{6BA5421F-A21B-4661-83A9-53CBA0DC3189}" Directory_="DesktopFolder" Attributes="0" KeyPath="exemplo.xlsx" Type="0"/>
     <ROW Component="help.pdf_1" ComponentId="{B1B25EDD-292C-4769-9E82-A106FB9C51A5}" Directory_="Interface_Dir" Attributes="0" KeyPath="help.pdf" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
@@ -87,16 +88,17 @@
     <ROW File="Heuristics.pdb" Component_="Heuristics_SymbolsOutput" FileName="HEURIS~2.PDB|[|AI_PROPPATH_FILENAME_PERBUILD_Heuristics.pdb]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Heuristics.pdb&gt;" SelfReg="false" NextFile="Heuristics.dll_1"/>
     <ROW File="Interface.exe" Component_="Interface_PrimaryOutput" FileName="INTERF~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_Interface.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Interface.exe&gt;" SelfReg="false" NextFile="Interface.exe.config" DigSign="true"/>
     <ROW File="Interface.exe.config" Component_="Interface_PrimaryOutput" FileName="INTERF~2.CON|[|AI_PROPPATH_FILENAME_PERBUILD_Interface.exe.config]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Interface.exe.config&gt;" SelfReg="false" NextFile="help.pdf"/>
-    <ROW File="Interface.pdb" Component_="Interface_SymbolsOutput" FileName="INTERF~2.PDB|[|AI_PROPPATH_FILENAME_PERBUILD_Interface.pdb]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Interface.pdb&gt;" SelfReg="false" NextFile="leaf.ico"/>
+    <ROW File="Interface.pdb" Component_="Interface_SymbolsOutput" FileName="INTERF~2.PDB|[|AI_PROPPATH_FILENAME_PERBUILD_Interface.pdb]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Interface.pdb&gt;" SelfReg="false" NextFile="exemplo.xlsx"/>
     <ROW File="MahApps.Metro.dll" Component_="Interface_References" FileName="MAHAPP~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_MahApps.Metro.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_MahApps.Metro.dll&gt;" SelfReg="false" NextFile="OxyPlot.dll"/>
     <ROW File="Newtonsoft.Json.dll" Component_="Heuristics_References" FileName="NEWTON~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Newtonsoft.Json.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Newtonsoft.Json.dll&gt;" SelfReg="false" NextFile="Heuristics.pdb"/>
     <ROW File="Newtonsoft.Json.dll_1" Component_="Interface_References" FileName="NEWTON~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Newtonsoft.Json.dll_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Newtonsoft.Json.dll_1&gt;" SelfReg="false" NextFile="MahApps.Metro.dll"/>
     <ROW File="OxyPlot.Wpf.dll" Component_="Interface_References" FileName="OXYPLO~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_OxyPlot.Wpf.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_OxyPlot.Wpf.dll&gt;" SelfReg="false" NextFile="System.Windows.Interactivity.dll"/>
     <ROW File="OxyPlot.dll" Component_="Interface_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_OxyPlot.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_OxyPlot.dll&gt;" SelfReg="false" NextFile="OxyPlot.Wpf.dll"/>
     <ROW File="System.Windows.Interactivity.dll" Component_="Interface_References" FileName="SYSTEM~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.Windows.Interactivity.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.Windows.Interactivity.dll&gt;" SelfReg="false" NextFile="Interface.pdb"/>
-    <ROW File="exemplo.xlsx" Component_="exemplo.xlsx" FileName="EXEMPL~1.XLS|exemplo.xlsx" Attributes="0" SourcePath="..\Interface\bin\Debug\exemplo.xlsx" SelfReg="false"/>
+    <ROW File="exemplo.xlsx" Component_="exemplo.xlsx" FileName="EXEMPL~1.XLS|exemplo.xlsx" Attributes="0" SourcePath="..\Interface\bin\Debug\exemplo.xlsx" SelfReg="false" NextFile="exemplo.xlsx_1"/>
+    <ROW File="exemplo.xlsx_1" Component_="help.pdf_1" FileName="EXEMPL~1.XLS|exemplo.xlsx" Attributes="0" SourcePath="..\Interface\bin\Debug\exemplo.xlsx" SelfReg="false" NextFile="favicon.ico"/>
+    <ROW File="favicon.ico" Component_="help.pdf_1" FileName="favicon.ico" Attributes="0" SourcePath="..\..\..\..\Downloads\favicon.ico" SelfReg="false"/>
     <ROW File="help.pdf" Component_="help.pdf_1" FileName="help.pdf" Attributes="0" SourcePath="..\Interface\help.pdf" SelfReg="false" NextFile="Heuristics.dll"/>
-    <ROW File="leaf.ico" Component_="help.pdf_1" FileName="leaf.ico" Attributes="0" SourcePath="..\..\..\..\Documents\leaf.ico" SelfReg="false" NextFile="exemplo.xlsx"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_Heuristics.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Heuristics.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Heuristics.dll]" Type="2" Content="0"/>
@@ -206,7 +208,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="GreenUp" Directory_="DesktopFolder" Name="GREENU~1|Green Up" Component_="Interface_PrimaryOutput" Target="[#Interface.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="Interface_Dir"/>
-    <ROW Shortcut="Interface" Directory_="SHORTCUTDIR" Name="INTERF~1|Interface" Component_="Interface_PrimaryOutput" Target="[#Interface.exe]" Hotkey="0" IconIndex="0" ShowCmd="1"/>
+    <ROW Shortcut="Interface" Directory_="SHORTCUTDIR" Name="GREENU~1|Green Up" Component_="Interface_PrimaryOutput" Target="[#Interface.exe]" Hotkey="0" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
